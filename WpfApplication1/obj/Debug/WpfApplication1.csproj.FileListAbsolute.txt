@@ -1,0 +1,100 @@
+c:\users\mika\documents\visual studio 2015\Projects\WpfApplication1\WpfApplication1\bin\Debug\WpfApplication1.exe.config
+c:\users\mika\documents\visual studio 2015\Projects\WpfApplication1\WpfApplication1\bin\Debug\WpfApplication1.exe
+c:\users\mika\documents\visual studio 2015\Projects\WpfApplication1\WpfApplication1\bin\Debug\WpfApplication1.pdb
+c:\users\mika\documents\visual studio 2015\Projects\WpfApplication1\WpfApplication1\obj\Debug\WpfApplication1.csprojResolveAssemblyReference.cache
+c:\users\mika\documents\visual studio 2015\Projects\WpfApplication1\WpfApplication1\obj\Debug\MainWindow.g.cs
+c:\users\mika\documents\visual studio 2015\Projects\WpfApplication1\WpfApplication1\obj\Debug\App.g.cs
+c:\users\mika\documents\visual studio 2015\Projects\WpfApplication1\WpfApplication1\obj\Debug\WpfApplication1_MarkupCompile.cache
+c:\users\mika\documents\visual studio 2015\Projects\WpfApplication1\WpfApplication1\obj\Debug\WpfApplication1_MarkupCompile.lref
+c:\users\mika\documents\visual studio 2015\Projects\WpfApplication1\WpfApplication1\obj\Debug\MainWindow.baml
+c:\users\mika\documents\visual studio 2015\Projects\WpfApplication1\WpfApplication1\obj\Debug\WpfApplication1.g.resources
+c:\users\mika\documents\visual studio 2015\Projects\WpfApplication1\WpfApplication1\obj\Debug\WpfApplication1.Properties.Resources.resources
+c:\users\mika\documents\visual studio 2015\Projects\WpfApplication1\WpfApplication1\obj\Debug\WpfApplication1.csproj.GenerateResource.Cache
+c:\users\mika\documents\visual studio 2015\Projects\WpfApplication1\WpfApplication1\obj\Debug\WpfApplication1.exe
+c:\users\mika\documents\visual studio 2015\Projects\WpfApplication1\WpfApplication1\obj\Debug\WpfApplication1.pdb
+c:\users\mika\documents\visual studio 2015\Projects\WpfApplication1\WpfApplication1\obj\Debug\DebugOptions.g.cs
+c:\users\mika\documents\visual studio 2015\Projects\WpfApplication1\WpfApplication1\obj\Debug\DebugOptions.baml
+F:\WpfApplication1\WpfApplication1\bin\Debug\WpfApplication1.exe.config
+F:\WpfApplication1\WpfApplication1\obj\Debug\WpfApplication1.exe
+F:\WpfApplication1\WpfApplication1\obj\Debug\WpfApplication1.pdb
+F:\WpfApplication1\WpfApplication1\bin\Debug\WpfApplication1.exe
+F:\WpfApplication1\WpfApplication1\bin\Debug\WpfApplication1.pdb
+F:\WpfApplication1\WpfApplication1\obj\Debug\WpfApplication1.csprojResolveAssemblyReference.cache
+F:\WpfApplication1\WpfApplication1\obj\Debug\DebugOptions.g.cs
+F:\WpfApplication1\WpfApplication1\obj\Debug\MainWindow.g.cs
+F:\WpfApplication1\WpfApplication1\obj\Debug\App.g.cs
+F:\WpfApplication1\WpfApplication1\obj\Debug\WpfApplication1_MarkupCompile.cache
+F:\WpfApplication1\WpfApplication1\obj\Debug\WpfApplication1_MarkupCompile.lref
+F:\WpfApplication1\WpfApplication1\obj\Debug\DebugOptions.baml
+F:\WpfApplication1\WpfApplication1\obj\Debug\MainWindow.baml
+F:\WpfApplication1\WpfApplication1\obj\Debug\WpfApplication1.g.resources
+F:\WpfApplication1\WpfApplication1\obj\Debug\WpfApplication1.Properties.Resources.resources
+F:\WpfApplication1\WpfApplication1\obj\Debug\WpfApplication1.csproj.GenerateResource.Cache
+F:\WpfApplication1\WpfApplication1\bin\Debug\Microsoft.Expression.Drawing.dll
+F:\WpfApplication1\WpfApplication1\bin\Debug\de\Microsoft.Expression.Drawing.resources.dll
+F:\WpfApplication1\WpfApplication1\bin\Debug\es\Microsoft.Expression.Drawing.resources.dll
+F:\WpfApplication1\WpfApplication1\bin\Debug\fr\Microsoft.Expression.Drawing.resources.dll
+F:\WpfApplication1\WpfApplication1\bin\Debug\it\Microsoft.Expression.Drawing.resources.dll
+F:\WpfApplication1\WpfApplication1\bin\Debug\ja\Microsoft.Expression.Drawing.resources.dll
+F:\WpfApplication1\WpfApplication1\bin\Debug\ko\Microsoft.Expression.Drawing.resources.dll
+F:\WpfApplication1\WpfApplication1\bin\Debug\ru\Microsoft.Expression.Drawing.resources.dll
+F:\WpfApplication1\WpfApplication1\bin\Debug\zh-Hans\Microsoft.Expression.Drawing.resources.dll
+F:\WpfApplication1\WpfApplication1\bin\Debug\zh-Hant\Microsoft.Expression.Drawing.resources.dll
+F:\WpfApplication1\WpfApplication1\obj\Debug\info.g.cs
+F:\WpfApplication1\WpfApplication1\obj\Debug\info.baml
+G:\WpfApplication1\WpfApplication1\bin\Debug\WpfApplication1.exe.config
+G:\WpfApplication1\WpfApplication1\obj\Debug\WpfApplication1.exe
+G:\WpfApplication1\WpfApplication1\obj\Debug\WpfApplication1.pdb
+G:\WpfApplication1\WpfApplication1\bin\Debug\WpfApplication1.exe
+G:\WpfApplication1\WpfApplication1\bin\Debug\WpfApplication1.pdb
+G:\WpfApplication1\WpfApplication1\bin\Debug\Microsoft.Expression.Drawing.dll
+G:\WpfApplication1\WpfApplication1\bin\Debug\de\Microsoft.Expression.Drawing.resources.dll
+G:\WpfApplication1\WpfApplication1\bin\Debug\es\Microsoft.Expression.Drawing.resources.dll
+G:\WpfApplication1\WpfApplication1\bin\Debug\fr\Microsoft.Expression.Drawing.resources.dll
+G:\WpfApplication1\WpfApplication1\bin\Debug\it\Microsoft.Expression.Drawing.resources.dll
+G:\WpfApplication1\WpfApplication1\bin\Debug\ja\Microsoft.Expression.Drawing.resources.dll
+G:\WpfApplication1\WpfApplication1\bin\Debug\ko\Microsoft.Expression.Drawing.resources.dll
+G:\WpfApplication1\WpfApplication1\bin\Debug\ru\Microsoft.Expression.Drawing.resources.dll
+G:\WpfApplication1\WpfApplication1\bin\Debug\zh-Hans\Microsoft.Expression.Drawing.resources.dll
+G:\WpfApplication1\WpfApplication1\bin\Debug\zh-Hant\Microsoft.Expression.Drawing.resources.dll
+G:\WpfApplication1\WpfApplication1\obj\Debug\WpfApplication1.csprojResolveAssemblyReference.cache
+G:\WpfApplication1\WpfApplication1\obj\Debug\DebugOptions.g.cs
+G:\WpfApplication1\WpfApplication1\obj\Debug\info.g.cs
+G:\WpfApplication1\WpfApplication1\obj\Debug\MainWindow.g.cs
+G:\WpfApplication1\WpfApplication1\obj\Debug\App.g.cs
+G:\WpfApplication1\WpfApplication1\obj\Debug\WpfApplication1_MarkupCompile.cache
+G:\WpfApplication1\WpfApplication1\obj\Debug\WpfApplication1_MarkupCompile.lref
+G:\WpfApplication1\WpfApplication1\obj\Debug\DebugOptions.baml
+G:\WpfApplication1\WpfApplication1\obj\Debug\info.baml
+G:\WpfApplication1\WpfApplication1\obj\Debug\MainWindow.baml
+G:\WpfApplication1\WpfApplication1\obj\Debug\WpfApplication1.g.resources
+G:\WpfApplication1\WpfApplication1\obj\Debug\WpfApplication1.Properties.Resources.resources
+G:\WpfApplication1\WpfApplication1\obj\Debug\WpfApplication1.csproj.GenerateResource.Cache
+C:\Users\Mika\Google Drive\Programming\WpfApplication1\WpfApplication1\bin\Debug\WpfApplication1.exe.config
+C:\Users\Mika\Google Drive\Programming\WpfApplication1\WpfApplication1\obj\Debug\WpfApplication1.exe
+C:\Users\Mika\Google Drive\Programming\WpfApplication1\WpfApplication1\obj\Debug\WpfApplication1.pdb
+C:\Users\Mika\Google Drive\Programming\WpfApplication1\WpfApplication1\bin\Debug\WpfApplication1.exe
+C:\Users\Mika\Google Drive\Programming\WpfApplication1\WpfApplication1\bin\Debug\WpfApplication1.pdb
+C:\Users\Mika\Google Drive\Programming\WpfApplication1\WpfApplication1\bin\Debug\Microsoft.Expression.Drawing.dll
+C:\Users\Mika\Google Drive\Programming\WpfApplication1\WpfApplication1\bin\Debug\de\Microsoft.Expression.Drawing.resources.dll
+C:\Users\Mika\Google Drive\Programming\WpfApplication1\WpfApplication1\bin\Debug\es\Microsoft.Expression.Drawing.resources.dll
+C:\Users\Mika\Google Drive\Programming\WpfApplication1\WpfApplication1\bin\Debug\fr\Microsoft.Expression.Drawing.resources.dll
+C:\Users\Mika\Google Drive\Programming\WpfApplication1\WpfApplication1\bin\Debug\it\Microsoft.Expression.Drawing.resources.dll
+C:\Users\Mika\Google Drive\Programming\WpfApplication1\WpfApplication1\bin\Debug\ja\Microsoft.Expression.Drawing.resources.dll
+C:\Users\Mika\Google Drive\Programming\WpfApplication1\WpfApplication1\bin\Debug\ko\Microsoft.Expression.Drawing.resources.dll
+C:\Users\Mika\Google Drive\Programming\WpfApplication1\WpfApplication1\bin\Debug\ru\Microsoft.Expression.Drawing.resources.dll
+C:\Users\Mika\Google Drive\Programming\WpfApplication1\WpfApplication1\bin\Debug\zh-Hans\Microsoft.Expression.Drawing.resources.dll
+C:\Users\Mika\Google Drive\Programming\WpfApplication1\WpfApplication1\bin\Debug\zh-Hant\Microsoft.Expression.Drawing.resources.dll
+C:\Users\Mika\Google Drive\Programming\WpfApplication1\WpfApplication1\obj\Debug\WpfApplication1.csprojResolveAssemblyReference.cache
+C:\Users\Mika\Google Drive\Programming\WpfApplication1\WpfApplication1\obj\Debug\DebugOptions.g.cs
+C:\Users\Mika\Google Drive\Programming\WpfApplication1\WpfApplication1\obj\Debug\info.g.cs
+C:\Users\Mika\Google Drive\Programming\WpfApplication1\WpfApplication1\obj\Debug\MainWindow.g.cs
+C:\Users\Mika\Google Drive\Programming\WpfApplication1\WpfApplication1\obj\Debug\App.g.cs
+C:\Users\Mika\Google Drive\Programming\WpfApplication1\WpfApplication1\obj\Debug\WpfApplication1_MarkupCompile.cache
+C:\Users\Mika\Google Drive\Programming\WpfApplication1\WpfApplication1\obj\Debug\WpfApplication1_MarkupCompile.lref
+C:\Users\Mika\Google Drive\Programming\WpfApplication1\WpfApplication1\obj\Debug\DebugOptions.baml
+C:\Users\Mika\Google Drive\Programming\WpfApplication1\WpfApplication1\obj\Debug\info.baml
+C:\Users\Mika\Google Drive\Programming\WpfApplication1\WpfApplication1\obj\Debug\MainWindow.baml
+C:\Users\Mika\Google Drive\Programming\WpfApplication1\WpfApplication1\obj\Debug\WpfApplication1.g.resources
+C:\Users\Mika\Google Drive\Programming\WpfApplication1\WpfApplication1\obj\Debug\WpfApplication1.Properties.Resources.resources
+C:\Users\Mika\Google Drive\Programming\WpfApplication1\WpfApplication1\obj\Debug\WpfApplication1.csproj.GenerateResource.Cache
