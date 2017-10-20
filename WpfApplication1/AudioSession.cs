@@ -16,8 +16,6 @@ namespace SoundMixerServer
 
         [ScriptIgnore]
         public int pid;
-        [ScriptIgnore]
-        public bool expired;
 
         private static Pair<string, string>[] sessionIDCodes = new Pair<string, string>[256];
 

@@ -4,7 +4,7 @@
 winexe
 C#
 .cs
-C:\Users\Mika\Desktop\sound-mixer-server\WpfApplication1\obj\x64\Debug\
+C:\Users\Mika\Desktop\sound-mixer-server\WpfApplication1\obj\Debug\
 SoundMixerServer
 none
 false
@@ -12,9 +12,9 @@ DEBUG;TRACE
 C:\Users\Mika\Desktop\sound-mixer-server\WpfApplication1\App.xaml
 11151548125
 2723352534
-116-1477256880
-18538504515
+120-1092763703
+18706929042
 MainWindow.xaml;
 
-False
+True
 

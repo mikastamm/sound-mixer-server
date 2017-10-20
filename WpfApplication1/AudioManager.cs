@@ -7,7 +7,7 @@ using CoreAudio;
 using System.Diagnostics;
 using System.Drawing;
 
-namespace SoundMixerServer
+namespace SoundMixerServer 
 {
     public class AudioManager
     {
@@ -18,6 +18,8 @@ namespace SoundMixerServer
         }
 
         private Dictionary<string, AudioSession> AudioSessions { get; set; } = new Dictionary<string, AudioSession>();
+
+        private HashSet<string> expiredSessions = new HashSet<string>();
 
         public delegate void AudioSessionChangedDelegate(AudioSession session);
         public event AudioSessionChangedDelegate OnAudioSessionAdded;
@@ -169,7 +171,7 @@ namespace SoundMixerServer
 
         public AudioSession[] getDisplayableAudioSessions()
         {
-            return AudioSessions.Values.Where(x => !x.expired).ToArray();
+            return AudioSessions.Values.Where(x => !expiredSessions.Contains(x.id)).ToArray();
         }
 
         #region EventHandlers
@@ -184,17 +186,13 @@ namespace SoundMixerServer
 
             if (newState == AudioSessionState.AudioSessionStateExpired)
             {
-                changedSession.expired = true;
-
-                if (OnAudioSessionRemoved != null)
-                    OnAudioSessionRemoved(changedSession);
+                expiredSessions.Add(changedSession.id);
             }
-            else if (newState == AudioSessionState.AudioSessionStateActive || newState == AudioSessionState.AudioSessionStateInactive)
+            else 
             {
-                if (changedSession.expired)
+                if (expiredSessions.Contains(changedSession.id))
                 {
-                    if (OnAudioSessionAdded != null)
-                        OnAudioSessionAdded(changedSession);
+                    expiredSessions.Remove(changedSession.id);
                 }
             }
         }
