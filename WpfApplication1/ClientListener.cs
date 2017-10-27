@@ -17,7 +17,7 @@ namespace SoundMixerServer
         private static bool acceptNewDevices = true;
         private static bool listenerRunning = false;
         public static Thread listenerThread;
-        public static Dictionary<IPEndPoint, ClientConnection> connectedClients = new Dictionary<IPEndPoint, ClientConnection>();
+        public static Dictionary<IPAddress, ClientConnection> connectedClients = new Dictionary<IPAddress, ClientConnection>();
 
         /*Model*/
         public static Dictionary<string, ClientInformation> knownDevices = new Dictionary<string, ClientInformation>();
@@ -99,7 +99,7 @@ namespace SoundMixerServer
                         if (acceptNewDevices)
                         {
                             ClientConnection client = new ClientConnection(newSocket);
-                            connectedClients.Add(client.clientEP, client);
+                            connectedClients.Add(client.clientEP.Address, client);
                             Task.Factory.StartNew(() => { client.initializeConnection(); });
                         }
                     }

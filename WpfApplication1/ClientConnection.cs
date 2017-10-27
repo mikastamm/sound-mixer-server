@@ -28,6 +28,13 @@ namespace SoundMixerServer
                 device.Connected = false;
                 device.LastConnected = DateTime.Now;
                 MainWindow.Instance.NotifyDeviceDatasetChanged();
+
+                Main.Instance.audioManager.OnAudioSessionAdded -= Form1_OnAudioSessionAdded;
+                Main.Instance.audioManager.OnAudioSessionEdited -= Form1_OnAudioSessionEdited;
+                Main.Instance.audioManager.OnAudioSessionIconChanged -= Form1_OnAudioSessionIconChanged;
+                Main.Instance.audioManager.OnAudioSessionRemoved -= Form1_OnAudioSessionRemoved;
+
+                ClientListener.connectedClients.Remove(IPAddress.Parse(device.IP));
             }
             socket.Close();
         }
@@ -75,7 +82,9 @@ namespace SoundMixerServer
         private void Form1_OnAudioSessionAdded(AudioSession session)
         {
             AudioSession.registerSessionID(session.id);
+            ApplicationIcon icon = Main.Instance.audioManager.getSessionIcon(session.id);
             send("ADD", session);
+            send("IMG", icon);
         }
 
         private void send(string data)
@@ -156,6 +165,31 @@ namespace SoundMixerServer
             }
         }
 
+        private void send(string action, ApplicationIcon toSend)
+        {
+            if (clientPublicKey != null)
+            {
+                try
+                {
+                    toSend.id = AudioSession.getCode(toSend.id);
+                    string data = action + JSONManager.serialize(toSend);
+                    socket.Send(Encoding.ASCII.GetBytes(VCCryptography.getEncryptedMessage(data, clientPublicKey) + "\r\n"));
+                }
+                catch (SocketException se)
+                {
+                    Console.WriteLine("Couldnt send: " + se.Message);
+                }
+                catch (ObjectDisposedException ex)
+                {
+                    Console.WriteLine("Couldnt send: " + ex.Message);
+                }
+            }
+            else
+            {
+                Console.WriteLine("Did not send Data: Public key is null");
+            }
+        }
+
         private void send(string action, ApplicationIcon[] toSend)
         {
             if (clientPublicKey != null)
@@ -175,11 +209,11 @@ namespace SoundMixerServer
                 }
                 catch (SocketException se)
                 {
-                    Console.WriteLine("Couldnt send: " + se.Message);
+                    Console.WriteLine("Couldnt send: " + se.ToString());
                 }
                 catch (ObjectDisposedException ex)
                 {
-                    Console.WriteLine("Couldnt send: " + ex.Message);
+                    Console.WriteLine("Couldnt send: " + ex.ToString());
                 }
             }
             else
@@ -201,6 +235,10 @@ namespace SoundMixerServer
             sessionCount = sessions.Length;
 
             ApplicationIcon[] icons = Main.Instance.audioManager.getSessionIcons();
+
+            if(icons.Length == 0)//TODO: Remove
+                Console.WriteLine("");
+
             send("IMGS", icons);
            
             return sessionCount;

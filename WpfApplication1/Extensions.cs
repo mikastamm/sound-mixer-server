@@ -24,8 +24,9 @@ namespace SoundMixerServer
         }
 
         public static string GetID(this AudioSessionControl2 asc)
-        {
-            return Base64Encode(asc.GetSessionInstanceIdentifier);
+        { 
+            return asc.GetProcessID.ToString();
+           // return Base64Encode(asc.GetSessionInstanceIdentifier);
         }
 
         /// <summary>

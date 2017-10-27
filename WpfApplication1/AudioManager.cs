@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using CoreAudio;
 using System.Diagnostics;
 using System.Drawing;
+using System.ComponentModel;
 
 namespace SoundMixerServer 
 {
@@ -118,15 +119,22 @@ namespace SoundMixerServer
                 AudioSessionControl2 sessionControl = device.AudioSessionManager2.Sessions[i];
                 if (setAudioSessionEventHandlers(sessionControl))
                 {
-                    AudioSession changedSession = getAudioSessionObject(sessionControl);
-                    AudioSessions.Add(changedSession.id, changedSession);
-                }
-            }
+                    AudioSession foundSession = getAudioSessionObject(sessionControl);
+                    Console.WriteLine("\n" + foundSession.ToString());
+                    Console.WriteLine("state: " + sessionControl.State.ToString());
 
-            //TODO: Remove this
-            foreach (AudioSession item in AudioSessions.Values)
-            {
-                Console.WriteLine("\n" + item.ToString());
+                    if (!AudioSessions.ContainsKey(foundSession.id))
+                    {
+                        AudioSessions.Add(foundSession.id, foundSession);
+                    }
+                    else
+                    {
+                        if(sessionControl.State == AudioSessionState.AudioSessionStateActive)
+                        {
+                            AudioSessions[foundSession.id] = foundSession;
+                        }
+                    }
+                }
             }
         }
 
@@ -316,7 +324,15 @@ namespace SoundMixerServer
                 if (pid != 0 && AudioSessions.Values.FirstOrDefault(x => x.pid == pid) == null)
                 {
                     sessionProcess = Process.GetProcessById(pid);
-                    sessionProcess.EnableRaisingEvents = true;
+                    try
+                    {
+                        sessionProcess.EnableRaisingEvents = true;
+                    }
+                    catch(Win32Exception e)
+                    {
+                        //TODO: Find another way to detect wether a process is alive or not
+                        Console.WriteLine("Access for Process " + sessionProcess.ProcessName + " Denied :(" );
+                    }
                     sessionProcess.Exited += HandleProcessExited;
                 }
 
@@ -360,7 +376,7 @@ namespace SoundMixerServer
             int _pid = (int)asc.GetProcessID;
             string displayName = asc.DisplayName;
 
-            if (_pid == 0)
+            if (_pid == 0 || displayName.Contains(@"\AudioSrv.Dll"))
             {
                 displayName = "System";
             }

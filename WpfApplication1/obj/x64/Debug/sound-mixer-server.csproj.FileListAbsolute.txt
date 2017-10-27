@@ -54,3 +54,31 @@ C:\Users\Mika\Desktop\sound-mixer-server\WpfApplication1\obj\x64\Debug\MainWindo
 C:\Users\Mika\Desktop\sound-mixer-server\WpfApplication1\obj\x64\Debug\sound-mixer-server.g.resources
 C:\Users\Mika\Desktop\sound-mixer-server\WpfApplication1\obj\x64\Debug\SoundMixerServer.Properties.Resources.resources
 C:\Users\Mika\Desktop\sound-mixer-server\WpfApplication1\obj\x64\Debug\sound-mixer-server.csproj.GenerateResource.Cache
+C:\Users\Mika\Desktop\Github Repos\sound-mixer-server\WpfApplication1\bin\x64\Debug\sound-mixer-server.exe.config
+C:\Users\Mika\Desktop\Github Repos\sound-mixer-server\WpfApplication1\obj\x64\Debug\Interop.IWshRuntimeLibrary.dll
+C:\Users\Mika\Desktop\Github Repos\sound-mixer-server\WpfApplication1\obj\x64\Debug\sound-mixer-server.csproj.ResolveComReference.cache
+C:\Users\Mika\Desktop\Github Repos\sound-mixer-server\WpfApplication1\obj\x64\Debug\sound-mixer-server.exe
+C:\Users\Mika\Desktop\Github Repos\sound-mixer-server\WpfApplication1\obj\x64\Debug\sound-mixer-server.pdb
+C:\Users\Mika\Desktop\Github Repos\sound-mixer-server\WpfApplication1\obj\x64\Debug\sound-mixer-server.csprojResolveAssemblyReference.cache
+C:\Users\Mika\Desktop\Github Repos\sound-mixer-server\WpfApplication1\obj\x64\Debug\MainWindow.g.cs
+C:\Users\Mika\Desktop\Github Repos\sound-mixer-server\WpfApplication1\obj\x64\Debug\App.g.cs
+C:\Users\Mika\Desktop\Github Repos\sound-mixer-server\WpfApplication1\obj\x64\Debug\sound-mixer-server_Content.g.cs
+C:\Users\Mika\Desktop\Github Repos\sound-mixer-server\WpfApplication1\obj\x64\Debug\sound-mixer-server_MarkupCompile.cache
+C:\Users\Mika\Desktop\Github Repos\sound-mixer-server\WpfApplication1\obj\x64\Debug\sound-mixer-server_MarkupCompile.lref
+C:\Users\Mika\Desktop\Github Repos\sound-mixer-server\WpfApplication1\bin\x64\Debug\sound-mixer-server.exe
+C:\Users\Mika\Desktop\Github Repos\sound-mixer-server\WpfApplication1\bin\x64\Debug\sound-mixer-server.pdb
+C:\Users\Mika\Desktop\Github Repos\sound-mixer-server\WpfApplication1\bin\x64\Debug\Microsoft.Expression.Drawing.dll
+C:\Users\Mika\Desktop\Github Repos\sound-mixer-server\WpfApplication1\bin\x64\Debug\de\Microsoft.Expression.Drawing.resources.dll
+C:\Users\Mika\Desktop\Github Repos\sound-mixer-server\WpfApplication1\bin\x64\Debug\es\Microsoft.Expression.Drawing.resources.dll
+C:\Users\Mika\Desktop\Github Repos\sound-mixer-server\WpfApplication1\bin\x64\Debug\fr\Microsoft.Expression.Drawing.resources.dll
+C:\Users\Mika\Desktop\Github Repos\sound-mixer-server\WpfApplication1\bin\x64\Debug\it\Microsoft.Expression.Drawing.resources.dll
+C:\Users\Mika\Desktop\Github Repos\sound-mixer-server\WpfApplication1\bin\x64\Debug\ja\Microsoft.Expression.Drawing.resources.dll
+C:\Users\Mika\Desktop\Github Repos\sound-mixer-server\WpfApplication1\bin\x64\Debug\ko\Microsoft.Expression.Drawing.resources.dll
+C:\Users\Mika\Desktop\Github Repos\sound-mixer-server\WpfApplication1\bin\x64\Debug\ru\Microsoft.Expression.Drawing.resources.dll
+C:\Users\Mika\Desktop\Github Repos\sound-mixer-server\WpfApplication1\bin\x64\Debug\zh-Hans\Microsoft.Expression.Drawing.resources.dll
+C:\Users\Mika\Desktop\Github Repos\sound-mixer-server\WpfApplication1\bin\x64\Debug\zh-Hant\Microsoft.Expression.Drawing.resources.dll
+C:\Users\Mika\Desktop\Github Repos\sound-mixer-server\WpfApplication1\obj\x64\Debug\App.baml
+C:\Users\Mika\Desktop\Github Repos\sound-mixer-server\WpfApplication1\obj\x64\Debug\MainWindow.baml
+C:\Users\Mika\Desktop\Github Repos\sound-mixer-server\WpfApplication1\obj\x64\Debug\sound-mixer-server.g.resources
+C:\Users\Mika\Desktop\Github Repos\sound-mixer-server\WpfApplication1\obj\x64\Debug\SoundMixerServer.Properties.Resources.resources
+C:\Users\Mika\Desktop\Github Repos\sound-mixer-server\WpfApplication1\obj\x64\Debug\sound-mixer-server.csproj.GenerateResource.Cache

@@ -52,6 +52,7 @@ namespace SoundMixerServer
             _instance = this;
             Console.WriteLine("##Starting Server##");
             Console.WriteLine("APPLICATION_DATA_ROOT_DIR" + Constants.APPLICATION_DATA_ROOT_DIR);
+            Console.WriteLine("Current Version: " + Version.currentVersion + "\nLatest Version: " + Version.latestVersion + "\nUp to Date: " + Version.isUpToDate + "\n");
 
             serverName = Environment.MachineName;
             info = new VolumeServer() { name = serverName, hasPassword = AuthentificationManager.Instance.usesPassword, RSAPublicKey = VCCryptography.getPublicKey() };
