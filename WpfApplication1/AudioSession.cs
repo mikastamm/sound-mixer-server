@@ -17,7 +17,7 @@ namespace SoundMixerServer
         [ScriptIgnore]
         public int pid;
 
-        private static Pair<string, string>[] sessionIDCodes = new Pair<string, string>[256];
+        private static Dictionary<string, string> sessionIDCodes = new Dictionary<string, string>();
 
         public AudioSession toCodeId()
         {
@@ -43,42 +43,32 @@ namespace SoundMixerServer
 
         public static string getCode(string id)
         {
-            Pair<string, string> current;
-            for (byte i = 0; i < sessionIDCodes.Length; i++)
-            {
-                if ((current = sessionIDCodes[i]) != null && current.v1 == id)
-                {
-                    return current.v2.ToString();
-                }
-            }
-            return "-1";
+            return sessionIDCodes.ContainsKey(id) ? sessionIDCodes[id] : "-1";
         }
 
         public static string getSessionId(string code)
         {
-            Pair<string, string> current;
-            for (byte i = 0; i < sessionIDCodes.Length; i++)
-            {
-                if ((current = sessionIDCodes[i]) != null && current.v2 == code)
-                {
-                    return current.v1;
-                }
-            }
-            return "";
+            return sessionIDCodes.ContainsValue(code) ? sessionIDCodes.FirstOrDefault(x => x.Value == code).Key : "";
         }
 
         public static bool registerSessionID(string id)
         {
             bool isSet = false;
-            for (byte i = 0; i < sessionIDCodes.Length; i++)
+
+            if(getCode(id) == "-1")
             {
-                if (sessionIDCodes[i] == null)
+                byte? idCode = IDCodes.claim();
+                if (idCode != null)
                 {
-                    sessionIDCodes[i] = new Pair<string, string>(id, i.ToString());
+                    sessionIDCodes.Add(id, idCode.ToString());
                     isSet = true;
-                    break;
                 }
             }
+            else
+            {
+                isSet = true;
+            }
+
             return isSet;
         }
 
@@ -86,14 +76,12 @@ namespace SoundMixerServer
         {
             bool hasRemoved = false;
 
-            for (byte i = 0; i < sessionIDCodes.Length; i++)
+            if(sessionIDCodes.ContainsKey(id))
             {
-                if (sessionIDCodes[i] != null && sessionIDCodes[i].v1 == id)
-                {
-                    sessionIDCodes[i] = null;
-                    hasRemoved = true;
-                    break;
-                }
+                string IDCode = sessionIDCodes[id];
+                sessionIDCodes.Remove(id);
+                IDCodes.free(byte.Parse(IDCode));
+                hasRemoved = true;
             }
 
             return hasRemoved;

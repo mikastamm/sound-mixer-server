@@ -87,6 +87,7 @@
     <Compile Include="ClientInformation.cs" />
     <Compile Include="ClientListener.cs" />
     <Compile Include="ConsoleManager.cs" />
+    <Compile Include="IDCodes.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="ShellLink.cs" />
     <Compile Include="SoundMixer.cs" />

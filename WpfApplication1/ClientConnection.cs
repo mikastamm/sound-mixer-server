@@ -41,17 +41,18 @@ namespace SoundMixerServer
 
         public void initializeConnection() 
         {
+            Console.WriteLine("Inititalizing Client session " + clientEP.ToString());
             AudioSession[] array = Main.Instance.audioManager.getDisplayableAudioSessions();
             foreach (var p in array)
             {
                 AudioSession.registerSessionID(p.id);
             }
 
-                Main.Instance.audioManager.OnAudioSessionAdded += Form1_OnAudioSessionAdded;
-                Main.Instance.audioManager.OnAudioSessionEdited += Form1_OnAudioSessionEdited;
-                Main.Instance.audioManager.OnAudioSessionIconChanged += Form1_OnAudioSessionIconChanged;
-                Main.Instance.audioManager.OnAudioSessionRemoved += Form1_OnAudioSessionRemoved;
-                handleReceivedData();
+            Main.Instance.audioManager.OnAudioSessionAdded += Form1_OnAudioSessionAdded;
+            Main.Instance.audioManager.OnAudioSessionEdited += Form1_OnAudioSessionEdited;
+            Main.Instance.audioManager.OnAudioSessionIconChanged += Form1_OnAudioSessionIconChanged;
+            Main.Instance.audioManager.OnAudioSessionRemoved += Form1_OnAudioSessionRemoved;
+            handleReceivedData();
         }
 
         //Event handlers
@@ -81,6 +82,7 @@ namespace SoundMixerServer
 
         private void Form1_OnAudioSessionAdded(AudioSession session)
         {
+            Console.WriteLine("Audio session added " + session.title + ":" + session.id );
             AudioSession.registerSessionID(session.id);
             ApplicationIcon icon = Main.Instance.audioManager.getSessionIcon(session.id);
             send("ADD", session);
@@ -236,7 +238,7 @@ namespace SoundMixerServer
 
             ApplicationIcon[] icons = Main.Instance.audioManager.getSessionIcons();
 
-            if(icons.Length == 0)//TODO: Remove
+            if(icons.Length == 0 || icons.Length < sessions.Length-2)//TODO: Remove
                 Console.WriteLine("");
 
             send("IMGS", icons);

@@ -45,7 +45,6 @@ namespace SoundMixerServer
             Console.WriteLine("Unsubscribing Audio Events");
             device.AudioSessionManager2.OnSessionCreated -= sessionCreatedDelegate;
             device.AudioEndpointVolume.OnVolumeNotification -= masterVolumeChangedDelegate;
-
             for (int i = 0; i < device.AudioSessionManager2.Sessions.Count; i++)
             {
                 try
@@ -68,7 +67,7 @@ namespace SoundMixerServer
             Console.WriteLine("Initializing audio sessions");
             DevEnum = new MMDeviceEnumerator();
             device = DevEnum.GetDefaultAudioEndpoint(CoreAudio.EDataFlow.eRender, CoreAudio.ERole.eMultimedia);
-
+            
             populateAudioSessions(device);
 
             masterVolumeChangedDelegate = new AudioEndpointVolumeNotificationDelegate(HandleMasterVolumeChanged);
@@ -253,6 +252,7 @@ namespace SoundMixerServer
 
         public void HandleSessionCreated(object sender, CoreAudio.Interfaces.IAudioSessionControl2 newSession)
         {
+            device.AudioSessionManager2.RefreshSessions();
             AudioSessionControl2 sessionControl = new AudioSessionControl2(newSession);
             if (setAudioSessionEventHandlers(sessionControl))
             {

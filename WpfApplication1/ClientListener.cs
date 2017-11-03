@@ -99,7 +99,13 @@ namespace SoundMixerServer
                         if (acceptNewDevices)
                         {
                             ClientConnection client = new ClientConnection(newSocket);
+                        if (connectedClients.ContainsKey(client.clientEP.Address))
+                        {
+                            connectedClients[client.clientEP.Address].disconnect();
+                            connectedClients.Remove(client.clientEP.Address);
+                        }
                             connectedClients.Add(client.clientEP.Address, client);
+
                             Task.Factory.StartNew(() => { client.initializeConnection(); });
                         }
                     }
