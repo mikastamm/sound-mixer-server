@@ -15,6 +15,8 @@ namespace SoundMixerServer
         public string RSAKeyJSON { get; set; }
         [XmlIgnore]
         public RSAKeyValue RSAKey { get { return JSONManager.deserialize<RSAKeyValue>(RSAKeyJSON); } }
+        [XmlIgnore]
+        public DateTime verifiedUntil { get; set; } = new DateTime(2000, 1, 1);
         public double Version { get; set; }
         [XmlIgnore]
         public string ID { get { return Name + RSAKeyJSON; } }
@@ -30,6 +32,7 @@ namespace SoundMixerServer
         [XmlIgnore]
         public static ClientInformation Empty = new ClientInformation() { Name = "", IP = "", isEmpty = true };
 
+
         public ClientInformation copy()
         {
             return new ClientInformation()
@@ -39,7 +42,8 @@ namespace SoundMixerServer
                 LastConnected = LastConnected,
                 Name = Name,
                 RSAKeyJSON = RSAKeyJSON,
-                Version = Version
+                Version = Version,
+                verifiedUntil = verifiedUntil
             };
             
         }

@@ -12,7 +12,7 @@ namespace SoundMixerServer
         public static int SERVER_KEY_SIZE = 2048;
         public static int CLIENT_KEY_SIZE = 2048;
         
-        public static string[] getSegments(string msg)
+        private static string[] getSegments(string msg)
         {
             int segmentSize = getMaximumDataBytes(CLIENT_KEY_SIZE, 160);
             int segmentCount = (int)Math.Ceiling(((double)msg.Length) / segmentSize);
@@ -37,21 +37,20 @@ namespace SoundMixerServer
         [Obsolete]
         public static string getEncryptedMessage(string msg, RSAKeyValue key)
         {
-            //string[] segments = getSegments(msg);
-            //string[] encryptedSegments = new string[segments.Length];
+            string[] segments = getSegments(msg);
+            string[] encryptedSegments = new string[segments.Length];
 
-            //for (int i = 0; i < segments.Length; i++)
-            //{
-            //    encryptedSegments[i] = Convert.ToBase64String(RSAEncrypt(Encoding.UTF8.GetBytes(segments[i]), key));
-            //}
+            for (int i = 0; i < segments.Length; i++)
+            {
+                encryptedSegments[i] = Convert.ToBase64String(RSAEncrypt(Encoding.UTF8.GetBytes(segments[i]), key));
+            }
 
-            //string JSON = JSONManager.serialize(encryptedSegments);
+            string JSON = JSONManager.serialize(encryptedSegments);
 
-            //return JSON;
-            return msg;
+            return JSON;
         }
 
-        public static int getMaximumDataBytes(int keySizeBits, int hashOutputSizeBits)
+        private static int getMaximumDataBytes(int keySizeBits, int hashOutputSizeBits)
         {
             return keySizeBits / 8 - 2 * hashOutputSizeBits / 8 - 2;
         }

@@ -21,7 +21,7 @@ namespace SoundMixerServer
         //Ports
         readonly public static int NETWORK_DISCOVERY_UDP_PORT = 11050;
         readonly public static int NETWORK_DISCOVERY_TCP_PORT = NETWORK_DISCOVERY_UDP_PORT;
-        readonly public static int AUTHENTIFICATION_TCP_PORT = 11046;
+        readonly public static int REVERSE_DISCOVERY_UDP_PORT = 11055;
         readonly public static int CLIENT_COMMUNICATION_TCP_PORT = 11047;
 
         //Audio stuff

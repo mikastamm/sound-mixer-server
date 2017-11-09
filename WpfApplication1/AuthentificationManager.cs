@@ -13,7 +13,7 @@ namespace SoundMixerServer
         public static AuthentificationManager Instance { get { if (_instance == null) _instance = new AuthentificationManager(); return _instance; }}
         private static AuthentificationManager _instance;
 
-        private const string SALT = "1AQQB-90KXZ-Z1Y91-UINT8";
+        public static TimeSpan timeToReAuth = TimeSpan.FromMinutes(5);
 
         private AuthentificationManager()
         {
@@ -37,12 +37,12 @@ namespace SoundMixerServer
 
         public bool checkPasswordHash(string passwordHash)
         {
-            return authData.PasswordHash.Equals(passwordHash, StringComparison.InvariantCultureIgnoreCase);
+            return usesPassword ? authData.PasswordHash.Equals(passwordHash, StringComparison.InvariantCultureIgnoreCase) : true;
         }
 
         public void setNewPassword(string password)
         {
-            authData.PasswordHash = (SALT + password).GetMD5Hash();
+            authData.PasswordHash = password.GetMD5Hash();
             authData.usesPassword = true;
             authData.save(); 
         }

@@ -83,6 +83,7 @@
     <Compile Include="AuthentificationManager.cs" />
     <Compile Include="AutoStart.cs" />
     <Compile Include="BroadcastReceiver.cs" />
+    <Compile Include="BroadCastSender.cs" />
     <Compile Include="ClientConnection.cs" />
     <Compile Include="ClientInformation.cs" />
     <Compile Include="ClientListener.cs" />

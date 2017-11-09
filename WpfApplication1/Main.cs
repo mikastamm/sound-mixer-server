@@ -70,6 +70,7 @@ namespace SoundMixerServer
             {
                 BroadcastReceiver.respondToNdRequests = true;
             }
+            BroadcastSender.sendServerStartedBroadcast();
         }
 
         public void Close()

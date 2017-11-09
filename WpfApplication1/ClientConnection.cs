@@ -95,7 +95,7 @@ namespace SoundMixerServer
             {
                 try
                 {
-                    socket.Send(Encoding.ASCII.GetBytes(VCCryptography.getEncryptedMessage(data, clientPublicKey) + "\r\n"));
+                    socket.Send(Encoding.ASCII.GetBytes(data + "\r\n"));
                 }
                 catch (SocketException se)
                 {
@@ -120,7 +120,7 @@ namespace SoundMixerServer
                 {
                     toSend = toSend.toCodeId();
                     string data = action + JSONManager.serialize(toSend);
-                    socket.Send(Encoding.ASCII.GetBytes(VCCryptography.getEncryptedMessage(data, clientPublicKey) + "\r\n"));
+                    socket.Send(Encoding.ASCII.GetBytes(data + "\r\n"));
                 }
                 catch (SocketException se)
                 {
@@ -150,7 +150,7 @@ namespace SoundMixerServer
                     }
 
                     string data = action + JSONManager.serialize(finalSend);
-                    socket.Send(Encoding.ASCII.GetBytes(VCCryptography.getEncryptedMessage(data, clientPublicKey) + "\r\n"));
+                    socket.Send(Encoding.ASCII.GetBytes(data + "\r\n"));
                 }
                 catch (SocketException se)
                 {
@@ -175,7 +175,7 @@ namespace SoundMixerServer
                 {
                     toSend.id = AudioSession.getCode(toSend.id);
                     string data = action + JSONManager.serialize(toSend);
-                    socket.Send(Encoding.ASCII.GetBytes(VCCryptography.getEncryptedMessage(data, clientPublicKey) + "\r\n"));
+                    socket.Send(Encoding.ASCII.GetBytes(data + "\r\n"));
                 }
                 catch (SocketException se)
                 {
@@ -207,7 +207,7 @@ namespace SoundMixerServer
                     }
 
                     string data = action + JSONManager.serialize(finalSend);
-                    socket.Send(Encoding.ASCII.GetBytes(VCCryptography.getEncryptedMessage(data, clientPublicKey) + "\r\n"));
+                    socket.Send(Encoding.ASCII.GetBytes(data + "\r\n"));
                 }
                 catch (SocketException se)
                 {
@@ -238,8 +238,8 @@ namespace SoundMixerServer
 
             ApplicationIcon[] icons = Main.Instance.audioManager.getSessionIcons();
 
-            if(icons.Length == 0 || icons.Length < sessions.Length-2)//TODO: Remove
-                Console.WriteLine("");
+            if(icons.Length == 0 || (icons.Length < sessions.Length-2))//TODO: Remove
+                Console.WriteLine("FUUUUUUUUUUUUUUUUUUUUUUUUUUCK");
 
             send("IMGS", icons);
            
@@ -256,7 +256,6 @@ namespace SoundMixerServer
                     {
                         Console.WriteLine("\nReceived " + recv);
 
-
                         if (recv.StartsWith("DEVINFO"))
                         {
                             recv = recv.Substring("DEVINFO".Length);
@@ -272,19 +271,40 @@ namespace SoundMixerServer
                         }
                         else
                         {
-                            string line, hash;
-                            if (usesEncryption)
+                            
+                            //if (usesEncryption)
+                            //{
+                            //    decryptMessage(recv, out hash, out line);
+                            //}
+                            //else
+                            //{
+                            //    getUnencryptedMessage(recv, out hash, out line);
+                            //}
+                            if(recv.StartsWith("AUTH"))
                             {
-                                decryptMessage(recv, out hash, out line);
+                                string encryptedPassword = recv.Remove(0, 4);
+                                string decryptedPasswordHash = decryptMessage(encryptedPassword);
+
+                                if(AuthentificationManager.Instance.checkPasswordHash(decryptedPasswordHash))
+                                {
+                                    device.verifiedUntil = DateTime.Now + AuthentificationManager.timeToReAuth;
+                                    Console.WriteLine("Client authenticated for another period");
+                                    continue;
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Wrong password\ngot:" + decryptedPasswordHash + "\nexp:" + AuthentificationManager.Instance.getPasswordHash());
+                                    send("AUTHWPW");//Code for Wrong Password
+                                    disconnect();
+                                }
                             }
-                            else
+                            else if(device.verifiedUntil < DateTime.Now && AuthentificationManager.Instance.usesPassword)
                             {
-                                getUnencryptedMessage(recv, out hash, out line);
+                                Console.WriteLine("Client Authentification Expired, requesting new authentication");
+                                send("AUTH");
+                                continue;
                             }
 
-                            Console.WriteLine("Received " + (usesEncryption ? "Encrypted" : "Unencrypted") + " Data: \n\tHash=" + hash + "\n\tData=" + line);
-                            if (!AuthentificationManager.Instance.usesPassword || AuthentificationManager.Instance.checkPasswordHash(hash))
-                            {
                                 if(ClientListener.knownDevices.ContainsKey(device.ID))
                                 {
                                     ClientListener.knownDevices[device.ID] = device;
@@ -296,27 +316,27 @@ namespace SoundMixerServer
                                 ClientListener.saveDevices();
                                 MainWindow.Instance.NotifyDeviceDatasetChanged();
 
-                                if (line.Equals("GETAUDIOSESSIONS"))
+                                if (recv.Equals("GETAUDIOSESSIONS"))
                                 {
                                     int sessionsSent = sendAllAudioSessions();
                                     Console.WriteLine("\tSent " + sessionsSent + "Sessions");
                                 }
-                                else if (line.StartsWith("EDIT"))
+                                else if (recv.StartsWith("EDIT"))
                                 {
-                                    line = line.Substring(4);
-                                    AudioSession session = JSONManager.deserialize<AudioSession>(line).toSessionId();
+                                    recv = recv.Substring(4);
+                                    AudioSession session = JSONManager.deserialize<AudioSession>(recv).toSessionId();
                                     Main.Instance.audioManager.updateChangedSession(session);
                                 }
-                                else if (line.StartsWith("TRACK"))
+                                else if (recv.StartsWith("TRACK"))
                                 {
-                                    line = line.Substring(5);
-                                    sendVolumeBlacklist.Add(AudioSession.getSessionId(line));
+                                    recv = recv.Substring(5);
+                                    sendVolumeBlacklist.Add(AudioSession.getSessionId(recv));
                                 }
-                                else if (line.StartsWith("ENDTRACK"))
+                                else if (recv.StartsWith("ENDTRACK"))
                                 {
-                                    line = line.Substring(8);
-                                    sendVolumeBlacklist.Remove(AudioSession.getSessionId(line));
-                                    AudioSession session = Main.Instance.audioManager.getAudioSessionWithID(AudioSession.getSessionId(line));
+                                    recv = recv.Substring(8);
+                                    sendVolumeBlacklist.Remove(AudioSession.getSessionId(recv));
+                                    AudioSession session = Main.Instance.audioManager.getAudioSessionWithID(AudioSession.getSessionId(recv));
 
                                 }
                                 //else if(line == "NOENC")
@@ -329,15 +349,9 @@ namespace SoundMixerServer
                                 //}
                                 else
                                 {
-                                    Console.WriteLine("\nReceived unknown command: " + line);
+                                    Console.WriteLine("\nReceived unknown command: " + recv);
                                 }
-                            }
-                            else
-                            {
-                                Console.WriteLine("Wrong password");
-                                send("AUTHWPW");//Code for Wrong Password
-                                disconnect();
-                            }
+                            
                         }
                     }
                 }
@@ -355,21 +369,11 @@ namespace SoundMixerServer
             }
         } 
 
-        public void getUnencryptedMessage(string line, out string passwordHash, out string data)
-        {
-            int seperatorIndex = line.IndexOf(";");
-            passwordHash = seperatorIndex != -1 ? line.Substring(0, seperatorIndex) : "";
-            data = line.Substring(seperatorIndex + 1);
-        }
-
-        public void decryptMessage(string encryptedString, out string passwordHash, out string data)
+        public string decryptMessage(string encryptedString)
         {
             byte[] EncryptedData = Convert.FromBase64String(encryptedString);
             byte[] DecryptedData = VCCryptography.RSADecrypt(EncryptedData);
-            string line = Encoding.UTF8.GetString(DecryptedData ?? new byte[0]);
-            int seperatorIndex = line.IndexOf(";");
-            passwordHash = seperatorIndex != -1 ? line.Substring(0, seperatorIndex) : "";
-            data = line.Substring(seperatorIndex + 1);
+            return Encoding.UTF8.GetString(DecryptedData ?? new byte[0]);       
         }
 
         public ClientConnection(Socket socket)
