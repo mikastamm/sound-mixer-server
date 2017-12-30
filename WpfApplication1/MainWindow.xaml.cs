@@ -42,10 +42,10 @@ namespace SoundMixerServer
             Application.Current.ShutdownMode = ShutdownMode.OnMainWindowClose;
             InitializeComponent();
             cbRunning.IsChecked = true;
-           // Hide();
+
+            closeToTray();
 
             Instance = this;
-            restoreFromTray();
             ShowInTaskbar = false;
 
             ObservableCollection<ClientInformation> col = new ObservableCollection<ClientInformation>();
@@ -126,6 +126,7 @@ namespace SoundMixerServer
         private void closeToTray()
         {
             Hide();
+            ConsoleManager.Hide();
             isOpen = false;
         }
 
@@ -135,6 +136,8 @@ namespace SoundMixerServer
             Activate();
             WindowState = WindowState.Normal;
             isOpen = true;
+
+            ConsoleManager.Show();
 
             Rect desktopWorkingArea = SystemParameters.WorkArea;
             Left = desktopWorkingArea.Right - (Width + 40);

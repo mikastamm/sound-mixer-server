@@ -15,7 +15,7 @@ namespace SoundMixerServer
     {
         public App()
         {
-            ConsoleManager.Show();
+            
         }
         public Main volumeServices;
 

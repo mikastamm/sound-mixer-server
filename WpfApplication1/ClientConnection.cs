@@ -20,6 +20,8 @@ namespace SoundMixerServer
 
         const bool usesEncryption = true;
 
+        string unprocessedReceiveUntilAuthentication = "";
+
         public void disconnect()
         {
             if (device != null)
@@ -96,6 +98,7 @@ namespace SoundMixerServer
                 try
                 {
                     socket.Send(Encoding.ASCII.GetBytes(data + "\r\n"));
+                    Console.WriteLine("SENT:" + data);
                 }
                 catch (SocketException se)
                 {
@@ -119,7 +122,9 @@ namespace SoundMixerServer
                 try
                 {
                     toSend = toSend.toCodeId();
+                    toSend.volume = (float)Math.Round(toSend.volume, 2);
                     string data = action + JSONManager.serialize(toSend);
+                    Console.WriteLine("SENT:" + data);
                     socket.Send(Encoding.ASCII.GetBytes(data + "\r\n"));
                 }
                 catch (SocketException se)
@@ -146,10 +151,12 @@ namespace SoundMixerServer
                     AudioSession[] finalSend = new AudioSession[toSend.Length];
                     for (int i = 0; i < toSend.Length; i++)
                     {
+                        toSend[i].volume = (float)Math.Round(toSend[i].volume, 2);
                         finalSend[i] = toSend[i].toCodeId();
                     }
 
                     string data = action + JSONManager.serialize(finalSend);
+                    Console.WriteLine("SENT:" + data);
                     socket.Send(Encoding.ASCII.GetBytes(data + "\r\n"));
                 }
                 catch (SocketException se)
@@ -175,6 +182,7 @@ namespace SoundMixerServer
                 {
                     toSend.id = AudioSession.getCode(toSend.id);
                     string data = action + JSONManager.serialize(toSend);
+                    Console.WriteLine("SENT:" + data);
                     socket.Send(Encoding.ASCII.GetBytes(data + "\r\n"));
                 }
                 catch (SocketException se)
@@ -207,6 +215,7 @@ namespace SoundMixerServer
                     }
 
                     string data = action + JSONManager.serialize(finalSend);
+                    Console.WriteLine("SENT:"+data.Substring(0, 20) + "...");
                     socket.Send(Encoding.ASCII.GetBytes(data + "\r\n"));
                 }
                 catch (SocketException se)
@@ -254,105 +263,7 @@ namespace SoundMixerServer
                 try {
                     while ((recv = reader.ReadLine()) != null) 
                     {
-                        Console.WriteLine("\nReceived " + recv);
-
-                        if (recv.StartsWith("DEVINFO"))
-                        {
-                            recv = recv.Substring("DEVINFO".Length);
-
-                            ClientInformation dev = new ClientInformation();
-                            dev = JSONManager.deserialize<ClientInformation>(recv);
-                            dev.LastConnected = DateTime.Now;
-                            dev.IP = clientEP.Address.ToString();
-                            dev.Connected = true;
-                            device = dev;
-
-                            clientPublicKey = dev.RSAKey;
-                        }
-                        else
-                        {
-                            
-                            //if (usesEncryption)
-                            //{
-                            //    decryptMessage(recv, out hash, out line);
-                            //}
-                            //else
-                            //{
-                            //    getUnencryptedMessage(recv, out hash, out line);
-                            //}
-                            if(recv.StartsWith("AUTH"))
-                            {
-                                string encryptedPassword = recv.Remove(0, 4);
-                                string decryptedPasswordHash = decryptMessage(encryptedPassword);
-
-                                if(AuthentificationManager.Instance.checkPasswordHash(decryptedPasswordHash))
-                                {
-                                    device.verifiedUntil = DateTime.Now + AuthentificationManager.timeToReAuth;
-                                    Console.WriteLine("Client authenticated for another period");
-                                    continue;
-                                }
-                                else
-                                {
-                                    Console.WriteLine("Wrong password\ngot:" + decryptedPasswordHash + "\nexp:" + AuthentificationManager.Instance.getPasswordHash());
-                                    send("AUTHWPW");//Code for Wrong Password
-                                    disconnect();
-                                }
-                            }
-                            else if(device.verifiedUntil < DateTime.Now && AuthentificationManager.Instance.usesPassword)
-                            {
-                                Console.WriteLine("Client Authentification Expired, requesting new authentication");
-                                send("AUTH");
-                                continue;
-                            }
-
-                                if(ClientListener.knownDevices.ContainsKey(device.ID))
-                                {
-                                    ClientListener.knownDevices[device.ID] = device;
-                                }
-                                else
-                                {
-                                    ClientListener.knownDevices.Add(device.ID, device);
-                                }
-                                ClientListener.saveDevices();
-                                MainWindow.Instance.NotifyDeviceDatasetChanged();
-
-                                if (recv.Equals("GETAUDIOSESSIONS"))
-                                {
-                                    int sessionsSent = sendAllAudioSessions();
-                                    Console.WriteLine("\tSent " + sessionsSent + "Sessions");
-                                }
-                                else if (recv.StartsWith("EDIT"))
-                                {
-                                    recv = recv.Substring(4);
-                                    AudioSession session = JSONManager.deserialize<AudioSession>(recv).toSessionId();
-                                    Main.Instance.audioManager.updateChangedSession(session);
-                                }
-                                else if (recv.StartsWith("TRACK"))
-                                {
-                                    recv = recv.Substring(5);
-                                    sendVolumeBlacklist.Add(AudioSession.getSessionId(recv));
-                                }
-                                else if (recv.StartsWith("ENDTRACK"))
-                                {
-                                    recv = recv.Substring(8);
-                                    sendVolumeBlacklist.Remove(AudioSession.getSessionId(recv));
-                                    AudioSession session = Main.Instance.audioManager.getAudioSessionWithID(AudioSession.getSessionId(recv));
-
-                                }
-                                //else if(line == "NOENC")
-                                //{
-                                //    usesEncryption = false;
-                                //}
-                                //else if(line == "ENC")
-                                //{
-                                //    usesEncryption = true;
-                                //}
-                                else
-                                {
-                                    Console.WriteLine("\nReceived unknown command: " + recv);
-                                }
-                            
-                        }
+                        handleData(recv);
                     }
                 }
                 catch(IOException e)
@@ -368,6 +279,104 @@ namespace SoundMixerServer
                 disconnect();
             }
         } 
+
+        private void handleData(string recv)
+        {
+            Console.WriteLine("\nReceived " + recv);
+
+            if (recv.StartsWith("DEVINFO"))
+            {
+                recv = recv.Substring("DEVINFO".Length);
+
+                ClientInformation dev = new ClientInformation();
+                dev = JSONManager.deserialize<ClientInformation>(recv);
+                dev.LastConnected = DateTime.Now;
+                dev.IP = clientEP.Address.ToString();
+                dev.Connected = true;
+                device = dev;
+
+                clientPublicKey = dev.RSAKey;
+            }
+            else
+            {
+                if (recv.StartsWith("AUTH"))
+                {
+                    string encryptedPassword = recv.Remove(0, 4);
+                    string decryptedPasswordHash = decryptMessage(encryptedPassword);
+
+                    if (AuthentificationManager.Instance.checkPasswordHash(decryptedPasswordHash))
+                    {
+                        device.verifiedUntil = DateTime.Now + AuthentificationManager.timeToReAuth;
+                        Console.WriteLine("Client authenticated for another period");
+
+                        if(string.IsNullOrEmpty(unprocessedReceiveUntilAuthentication))
+                        {
+                            return; //No data to handle
+                        }
+                        else
+                        {
+                            recv = unprocessedReceiveUntilAuthentication;
+                        }
+
+                        unprocessedReceiveUntilAuthentication = "";
+                        
+                    }
+                    else
+                    {
+                        Console.WriteLine("Wrong password\ngot:" + decryptedPasswordHash + "\nexp:" + AuthentificationManager.Instance.getPasswordHash());
+                        send("AUTHWPW");//Code for Wrong Password
+                        disconnect();
+                    }
+                }
+                else if (device.verifiedUntil < DateTime.Now && AuthentificationManager.Instance.usesPassword)
+                {
+                    Console.WriteLine("Client Authentification Expired, requesting new authentication");
+                    unprocessedReceiveUntilAuthentication = recv;
+                    send("AUTH");
+                    return;
+                }
+
+                if (ClientListener.knownDevices.ContainsKey(device.ID))
+                {
+                    ClientListener.knownDevices[device.ID] = device;
+                }
+                else
+                {
+                    ClientListener.knownDevices.Add(device.ID, device);
+                }
+                ClientListener.saveDevices();
+                MainWindow.Instance.NotifyDeviceDatasetChanged();
+
+                if (recv.Equals("GETAUDIOSESSIONS"))
+                {
+                    int sessionsSent = sendAllAudioSessions();
+                    Console.WriteLine("\tSent " + sessionsSent + "Sessions");
+                }
+                else if (recv.StartsWith("EDIT"))
+                {
+                    recv = recv.Substring(4);
+                    AudioSession session = JSONManager.deserialize<AudioSession>(recv).toSessionId();
+                    Main.Instance.audioManager.updateChangedSession(session);
+                }
+                else if (recv.StartsWith("TRACK"))
+                {
+                    recv = recv.Substring(5);
+                    sendVolumeBlacklist.Add(AudioSession.getSessionId(recv));
+                }
+                else if (recv.StartsWith("ENDTRACK"))
+                {
+                    recv = recv.Substring(8);
+                    sendVolumeBlacklist.Remove(AudioSession.getSessionId(recv));
+                    AudioSession session = Main.Instance.audioManager.getAudioSessionWithID(AudioSession.getSessionId(recv));
+
+                }
+                else
+                {
+                    Console.WriteLine("\nReceived unknown command: " + recv);
+                }
+
+            }
+        }
 
         public string decryptMessage(string encryptedString)
         {
