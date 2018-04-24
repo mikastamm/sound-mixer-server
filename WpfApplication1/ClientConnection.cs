@@ -15,10 +15,10 @@ namespace SoundMixerServer
         HashSet<string> sendVolumeBlacklist = new HashSet<string>();
         Dictionary<string, AudioSession> lastEditSent = new Dictionary<string, AudioSession>();
 
-        RSAKeyValue clientPublicKey;
+        RSAKeyValue clientPublicKey = new RSAKeyValue();
         ClientInformation device;
 
-        const bool usesEncryption = true;
+        const bool usesEncryption = false;
 
         string unprocessedReceiveUntilAuthentication = "";
 
@@ -202,35 +202,8 @@ namespace SoundMixerServer
 
         private void send(string action, ApplicationIcon[] toSend)
         {
-            if (clientPublicKey != null)
-            {
-                try
-                {
-                    ApplicationIcon[] finalSend = new ApplicationIcon[toSend.Length];
-                    for (int i = 0; i < toSend.Length; i++)
-                    {
-                        finalSend[i] = new ApplicationIcon();
-                        finalSend[i].id = AudioSession.getCode(toSend[i].id);
-                        finalSend[i].icon = toSend[i].icon;
-                    }
-
-                    string data = action + JSONManager.serialize(finalSend);
-                    Console.WriteLine("SENT:"+data.Substring(0, 20) + "...");
-                    socket.Send(Encoding.ASCII.GetBytes(data + "\r\n"));
-                }
-                catch (SocketException se)
-                {
-                    Console.WriteLine("Couldnt send: " + se.ToString());
-                }
-                catch (ObjectDisposedException ex)
-                {
-                    Console.WriteLine("Couldnt send: " + ex.ToString());
-                }
-            }
-            else
-            {
-                Console.WriteLine("Did not send Data: Public key is null");
-            }
+            foreach (ApplicationIcon icon in toSend)
+                send("IMG", icon);
         }
 
         /// <summary>
@@ -295,7 +268,7 @@ namespace SoundMixerServer
                 dev.Connected = true;
                 device = dev;
 
-                clientPublicKey = dev.RSAKey;
+
             }
             else
             {
@@ -328,7 +301,7 @@ namespace SoundMixerServer
                         disconnect();
                     }
                 }
-                else if (device.verifiedUntil < DateTime.Now && AuthentificationManager.Instance.usesPassword)
+                else if (AuthentificationManager.Instance.usesPassword && device.verifiedUntil < DateTime.Now)
                 {
                     Console.WriteLine("Client Authentification Expired, requesting new authentication");
                     unprocessedReceiveUntilAuthentication = recv;
@@ -336,13 +309,14 @@ namespace SoundMixerServer
                     return;
                 }
 
-                if (ClientListener.knownDevices.ContainsKey(device.ID))
+                if (device != null && ClientListener.knownDevices.ContainsKey(device.ID))
                 {
                     ClientListener.knownDevices[device.ID] = device;
                 }
                 else
                 {
-                    ClientListener.knownDevices.Add(device.ID, device);
+                    if (device != null)
+                        ClientListener.knownDevices.Add(device.ID, device);
                 }
                 ClientListener.saveDevices();
                 MainWindow.Instance.NotifyDeviceDatasetChanged();

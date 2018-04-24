@@ -49,6 +49,7 @@ namespace SoundMixerServer
 
         public Main()
         {
+            ConsoleManager.Show();
             _instance = this;
             Console.WriteLine("##Starting Server##");
             Console.WriteLine("APPLICATION_DATA_ROOT_DIR" + Constants.APPLICATION_DATA_ROOT_DIR);
@@ -56,7 +57,7 @@ namespace SoundMixerServer
 
             IDCodes.fill();
             serverName = Environment.MachineName;
-            info = new VolumeServer() { name = serverName, hasPassword = AuthentificationManager.Instance.usesPassword, RSAPublicKey = VCCryptography.getPublicKey() };
+            info = new VolumeServer() { name = serverName, hasPassword = AuthentificationManager.Instance.usesPassword, id = VCCryptography.getPublicKey() };
             audioManager = new AudioManager();
 
             ClientListener.StartListener();

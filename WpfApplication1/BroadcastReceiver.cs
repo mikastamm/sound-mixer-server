@@ -74,13 +74,8 @@ namespace SoundMixerServer
 
     public class VolumeServer
     {
-        public VolumeServer()
-        {
-
-        }
-
         public bool hasPassword { get; set; }
         public string name { get; set; }
-        public string RSAPublicKey { get; set; }
+        public string id { get; set; }
     }
 }

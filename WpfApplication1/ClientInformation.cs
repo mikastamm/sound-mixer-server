@@ -12,14 +12,10 @@ namespace SoundMixerServer
     public class ClientInformation
     {
         public string Name { get; set; }
-        public string RSAKeyJSON { get; set; }
-        [XmlIgnore]
-        public RSAKeyValue RSAKey { get { return JSONManager.deserialize<RSAKeyValue>(RSAKeyJSON); } }
+        public string ID { get; set; }
         [XmlIgnore]
         public DateTime verifiedUntil { get; set; } = new DateTime(2000, 1, 1);
         public double Version { get; set; }
-        [XmlIgnore]
-        public string ID { get { return Name + RSAKeyJSON; } }
         public string IP { get; set; }
         public bool Connected { get; set; }
         public string ConnectedString { get { return isEmpty ? "" : (Connected ? "yes" : "no"); } }
@@ -41,7 +37,7 @@ namespace SoundMixerServer
                 IP = IP,
                 LastConnected = LastConnected,
                 Name = Name,
-                RSAKeyJSON = RSAKeyJSON,
+                ID = ID,
                 Version = Version,
                 verifiedUntil = verifiedUntil
             };

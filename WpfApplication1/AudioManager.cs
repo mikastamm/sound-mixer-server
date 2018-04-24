@@ -257,7 +257,11 @@ namespace SoundMixerServer
             if (setAudioSessionEventHandlers(sessionControl))
             {
                 AudioSession createdSession = getAudioSessionObject(sessionControl);
-                AudioSessions.Add(createdSession.id, createdSession);
+
+                if (!AudioSessions.ContainsKey(createdSession.id))
+                    AudioSessions.Add(createdSession.id, createdSession);
+                else
+                    AudioSessions[createdSession.id] = createdSession;
 
                 if (Main.LOG_EVENTS)
                     Console.WriteLine("\n New Session Created: " + createdSession.ToString());

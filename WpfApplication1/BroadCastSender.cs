@@ -14,7 +14,7 @@ namespace SoundMixerServer
         {
             UdpClient client = new UdpClient();
             IPEndPoint ip = new IPEndPoint(IPAddress.Broadcast, Constants.REVERSE_DISCOVERY_UDP_PORT);
-            byte[] bytes = Encoding.ASCII.GetBytes("VCHELLO");
+            byte[] bytes = Encoding.ASCII.GetBytes("VC_HELLO");
             client.Send(bytes, bytes.Length, ip);
             client.Close();
         }
