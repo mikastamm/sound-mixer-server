@@ -85,7 +85,10 @@
     <Compile Include="Helpers\AutoStart.cs" />
     <Compile Include="Networking\ApplicationIcon.cs" />
     <Compile Include="Networking\MessageHandlers\DeviceInfoMessageHandler.cs" />
+    <Compile Include="Networking\MessageHandlers\EditAudioSessionMessageHandler.cs" />
+    <Compile Include="Networking\MessageHandlers\EndTrackMessageHandler.cs" />
     <Compile Include="Networking\MessageHandlers\MessageHandlerFactory.cs" />
+    <Compile Include="Networking\MessageHandlers\TrackStartMessageHandler.cs" />
     <Compile Include="Networking\MessageSenders\AllAudioSessionsMessageSender.cs" />
     <Compile Include="Networking\MessageSenders\AudioSessionEditedMessageSender.cs" />
     <Compile Include="Networking\MessageSenders\AudioSessionImageSender.cs" />

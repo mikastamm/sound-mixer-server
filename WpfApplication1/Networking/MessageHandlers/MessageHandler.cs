@@ -8,7 +8,6 @@ namespace SoundMixerServer.Networking
 {
     interface MessageHandler
     {
-        string Tag { get; set; }
         void handleMessage(string message);
     }
 }

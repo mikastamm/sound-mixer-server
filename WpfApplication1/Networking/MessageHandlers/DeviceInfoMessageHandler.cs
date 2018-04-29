@@ -8,7 +8,14 @@ namespace SoundMixerServer.Networking.MessageHandlers
 {
     class DeviceInfoMessageHandler : MessageHandler
     {
-        public string Tag { get; set; } = "DEVINFO";
+        public const string Tag = "DEVINFO";
+
+        private ClientLogic logic;
+
+        public DeviceInfoMessageHandler(ClientLogic logic)
+        {
+            this.logic = logic;
+        }
 
         public void handleMessage(string message)
         {
@@ -30,6 +37,8 @@ namespace SoundMixerServer.Networking.MessageHandlers
             }
 
             ClientListener.saveDevices();
+            logic.device = dev;
+            MainWindow.Instance.NotifyDeviceDatasetChanged();
         }
     }
 }
