@@ -12,7 +12,7 @@ namespace SoundMixerServer
     public class ClientInformation
     {
         public string Name { get; set; }
-        public string ID { get; set; }
+        public string id { get; set; }
         [XmlIgnore]
         public DateTime verifiedUntil { get; set; } = new DateTime(2000, 1, 1);
         public double Version { get; set; }
@@ -37,7 +37,7 @@ namespace SoundMixerServer
                 IP = IP,
                 LastConnected = LastConnected,
                 Name = Name,
-                ID = ID,
+                id = id,
                 Version = Version,
                 verifiedUntil = verifiedUntil
             };

@@ -14,7 +14,7 @@ namespace SoundMixerServer
 {
     public static class ClientListener
     {
-        private static bool acceptNewDevices = true;
+        public static bool acceptNewDevices = true;
         private static bool listenerRunning = false;
         public static Thread listenerThread;
         public static Dictionary<IPAddress, ClientConnection> connectedClients = new Dictionary<IPAddress, ClientConnection>();
@@ -65,8 +65,8 @@ namespace SoundMixerServer
                 foreach (ClientInformation d in dev.devices)
                 {
                     d.Connected = false;
-                    if(!knownDevices.ContainsKey(d.ID))
-                    knownDevices.Add(d.ID, d);
+                    if(!knownDevices.ContainsKey(d.id))
+                    knownDevices.Add(d.id, d);
                 }
                 MainWindow.Instance.NotifyDeviceDatasetChanged();
             }

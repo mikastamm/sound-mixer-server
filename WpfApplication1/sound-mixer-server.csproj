@@ -78,23 +78,40 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="AudioManager.cs" />
-    <Compile Include="AudioSession.cs" />
+    <Compile Include="Audio\AudioHelper.cs" />
+    <Compile Include="Audio\AudioManager.cs" />
+    <Compile Include="Audio\AudioSession.cs" />
     <Compile Include="AuthentificationManager.cs" />
-    <Compile Include="AutoStart.cs" />
-    <Compile Include="BroadcastReceiver.cs" />
-    <Compile Include="BroadCastSender.cs" />
-    <Compile Include="ClientConnection.cs" />
+    <Compile Include="Helpers\AutoStart.cs" />
+    <Compile Include="Networking\ApplicationIcon.cs" />
+    <Compile Include="Networking\MessageHandlers\DeviceInfoMessageHandler.cs" />
+    <Compile Include="Networking\MessageHandlers\MessageHandlerFactory.cs" />
+    <Compile Include="Networking\MessageSenders\AllAudioSessionsMessageSender.cs" />
+    <Compile Include="Networking\MessageSenders\AudioSessionEditedMessageSender.cs" />
+    <Compile Include="Networking\MessageSenders\AudioSessionImageSender.cs" />
+    <Compile Include="Networking\MessageSenders\AudioSessionRemoveMessageSender.cs" />
+    <Compile Include="Networking\BroadcastReceiver.cs" />
+    <Compile Include="Networking\BroadCastSender.cs" />
+    <Compile Include="Networking\ClientConnection.cs" />
     <Compile Include="ClientInformation.cs" />
     <Compile Include="ClientListener.cs" />
-    <Compile Include="ConsoleManager.cs" />
-    <Compile Include="IDCodes.cs" />
+    <Compile Include="Helpers\ConsoleManager.cs" />
+    <Compile Include="Networking\ClientLogic.cs" />
+    <Compile Include="Networking\Connection.cs" />
+    <Compile Include="Networking\ConnectionListener.cs" />
+    <Compile Include="Networking\IDCodes.cs" />
     <Compile Include="Main.cs" />
+    <Compile Include="Networking\MessageHandlers\GetAudioSessionsMessageHandler.cs" />
+    <Compile Include="Networking\MessageHandlers\MessageHandler.cs" />
+    <Compile Include="Networking\MessageSenderDispatcher.cs" />
+    <Compile Include="Networking\MessageSenders\AudioSessionSender.cs" />
+    <Compile Include="Networking\SocketConnection.cs" />
+    <Compile Include="Networking\SocketListener.cs" />
     <Compile Include="ShellLink.cs" />
-    <Compile Include="SoundMixer.cs" />
+    <Compile Include="Audio\SoundMixer.cs" />
     <Compile Include="VCCryptography.cs" />
     <Compile Include="Version.cs" />
-    <Compile Include="XMLManager.cs" />
+    <Compile Include="Helpers\XMLManager.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -199,7 +216,7 @@
     <Compile Include="CoreAudio\Structures\WAVEFORMATEX.cs" />
     <Compile Include="CoreAudio\Subunit.cs" />
     <Compile Include="Extensions.cs" />
-    <Compile Include="JSONManager.cs" />
+    <Compile Include="Helpers\JSONManager.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

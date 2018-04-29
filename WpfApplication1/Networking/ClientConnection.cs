@@ -41,7 +41,7 @@ namespace SoundMixerServer
             socket.Close();
         }
 
-        public void initializeConnection() 
+        public void initializeConnection()
         {
             Console.WriteLine("Inititalizing Client session " + clientEP.ToString());
             AudioSession[] array = Main.Instance.audioManager.getDisplayableAudioSessions();
@@ -67,7 +67,7 @@ namespace SoundMixerServer
 
         private void Form1_OnAudioSessionIconChanged(AudioSession session)
         {
-         //   send("IMG", session);
+            //   send("IMG", session);
         }
 
         private void Form1_OnAudioSessionEdited(AudioSession session)
@@ -75,7 +75,7 @@ namespace SoundMixerServer
             AudioSession lastEdit;
             bool firstEdit = !lastEditSent.TryGetValue(session.id, out lastEdit);
 
-            if (!sendVolumeBlacklist.Contains(session.id) && (firstEdit ||  !lastEdit.Equals(session)))
+            if (!sendVolumeBlacklist.Contains(session.id) && (firstEdit || !lastEdit.Equals(session)))
             {
                 send("EDIT", session);
                 lastEditSent[session.id] = session;
@@ -84,12 +84,14 @@ namespace SoundMixerServer
 
         private void Form1_OnAudioSessionAdded(AudioSession session)
         {
-            Console.WriteLine("Audio session added " + session.title + ":" + session.id );
+            Console.WriteLine("Audio session added " + session.title + ":" + session.id);
             AudioSession.registerSessionID(session.id);
             ApplicationIcon icon = Main.Instance.audioManager.getSessionIcon(session.id);
             send("ADD", session);
             send("IMG", icon);
         }
+
+
 
         private void send(string data)
         {
@@ -117,87 +119,30 @@ namespace SoundMixerServer
 
         private void send(string action, AudioSession toSend)
         {
-            if (clientPublicKey != null)
-            {
-                try
-                {
-                    toSend = toSend.toCodeId();
-                    toSend.volume = (float)Math.Round(toSend.volume, 2);
-                    string data = action + JSONManager.serialize(toSend);
-                    Console.WriteLine("SENT:" + data);
-                    socket.Send(Encoding.ASCII.GetBytes(data + "\r\n"));
-                }
-                catch (SocketException se)
-                {
-                    Console.WriteLine("Couldnt send: " + se.Message);
-                }
-                catch(ObjectDisposedException ex)
-                {
-                    Console.WriteLine("Couldnt send: " + ex.Message);
-                }
-            }
-            else
-            {
-                Console.WriteLine("Did not send Data: Public key is null");
-            }
+            toSend = toSend.toCodeId();
+            toSend.volume = (float)Math.Round(toSend.volume, 2);
+            string data = action + JSONManager.serialize(toSend);
+            send(data);
         }
 
         private void send(string action, AudioSession[] toSend)
         {
-            if (clientPublicKey != null)
+            AudioSession[] finalSend = new AudioSession[toSend.Length];
+            for (int i = 0; i < toSend.Length; i++)
             {
-                try
-                {
-                    AudioSession[] finalSend = new AudioSession[toSend.Length];
-                    for (int i = 0; i < toSend.Length; i++)
-                    {
-                        toSend[i].volume = (float)Math.Round(toSend[i].volume, 2);
-                        finalSend[i] = toSend[i].toCodeId();
-                    }
+                toSend[i].volume = (float)Math.Round(toSend[i].volume, 2);
+                finalSend[i] = toSend[i].toCodeId();
+            }
 
-                    string data = action + JSONManager.serialize(finalSend);
-                    Console.WriteLine("SENT:" + data);
-                    socket.Send(Encoding.ASCII.GetBytes(data + "\r\n"));
-                }
-                catch (SocketException se)
-                {
-                    Console.WriteLine("Couldnt send: " + se.Message);
-                }
-                catch (ObjectDisposedException ex)
-                {
-                    Console.WriteLine("Couldnt send: " + ex.Message);
-                }
-            }
-            else
-            {
-                Console.WriteLine("Did not send Data: Public key is null");
-            }
+            string data = action + JSONManager.serialize(finalSend);
+            send(data);
         }
 
         private void send(string action, ApplicationIcon toSend)
         {
-            if (clientPublicKey != null)
-            {
-                try
-                {
-                    toSend.id = AudioSession.getCode(toSend.id);
-                    string data = action + JSONManager.serialize(toSend);
-                    Console.WriteLine("SENT:" + data);
-                    socket.Send(Encoding.ASCII.GetBytes(data + "\r\n"));
-                }
-                catch (SocketException se)
-                {
-                    Console.WriteLine("Couldnt send: " + se.Message);
-                }
-                catch (ObjectDisposedException ex)
-                {
-                    Console.WriteLine("Couldnt send: " + ex.Message);
-                }
-            }
-            else
-            {
-                Console.WriteLine("Did not send Data: Public key is null");
-            }
+            toSend.id = AudioSession.getCode(toSend.id);
+            string data = action + JSONManager.serialize(toSend);
+            send(data);
         }
 
         private void send(string action, ApplicationIcon[] toSend)
@@ -207,25 +152,23 @@ namespace SoundMixerServer
         }
 
         /// <summary>
+        /// ///////////////////////////////////////
+        /// </summary>
+        /// <param name="data"></param>
+
+        /// <summary>
         /// Sends all AudioSessions to the Client, used for app start of Client to populate the adapter
         /// </summary>
         /// <returns>count of sessions sent</returns>
         public int sendAllAudioSessions()
         {
-            int sessionCount = 0;
-
             AudioSession[] sessions = Main.Instance.audioManager.getDisplayableAudioSessions();
             send("REP", sessions);
-            sessionCount = sessions.Length;
 
             ApplicationIcon[] icons = Main.Instance.audioManager.getSessionIcons();
-
-            if(icons.Length == 0 || (icons.Length < sessions.Length-2))//TODO: Remove
-                Console.WriteLine("FUUUUUUUUUUUUUUUUUUUUUUUUUUCK");
-
             send("IMGS", icons);
-           
-            return sessionCount;
+
+            return sessions.Length;
         }
 
         public void handleReceivedData()
@@ -233,17 +176,18 @@ namespace SoundMixerServer
             using (StreamReader reader = new StreamReader(new NetworkStream(socket, false), Encoding.UTF8))
             {
                 string recv;
-                try {
-                    while ((recv = reader.ReadLine()) != null) 
+                try
+                {
+                    while ((recv = reader.ReadLine()) != null)
                     {
                         handleData(recv);
                     }
                 }
-                catch(IOException e)
+                catch (IOException e)
                 {
                     Console.WriteLine("\nConnection lost: " + e.Message);
                 }
-                catch(ObjectDisposedException odex)
+                catch (ObjectDisposedException odex)
                 {
                     //TODO: reconnect (Happened when audio changed on client)   
                 }
@@ -251,7 +195,7 @@ namespace SoundMixerServer
                 Console.WriteLine("INFO: Reached end of Stream in handleReceivedData(), wont receive new Data from this client   ( reader.ReadLine() == null )");
                 disconnect();
             }
-        } 
+        }
 
         private void handleData(string recv)
         {
@@ -282,7 +226,7 @@ namespace SoundMixerServer
                         device.verifiedUntil = DateTime.Now + AuthentificationManager.timeToReAuth;
                         Console.WriteLine("Client authenticated for another period");
 
-                        if(string.IsNullOrEmpty(unprocessedReceiveUntilAuthentication))
+                        if (string.IsNullOrEmpty(unprocessedReceiveUntilAuthentication))
                         {
                             return; //No data to handle
                         }
@@ -292,7 +236,7 @@ namespace SoundMixerServer
                         }
 
                         unprocessedReceiveUntilAuthentication = "";
-                        
+
                     }
                     else
                     {
@@ -309,14 +253,14 @@ namespace SoundMixerServer
                     return;
                 }
 
-                if (device != null && ClientListener.knownDevices.ContainsKey(device.ID))
+                if (device != null && ClientListener.knownDevices.ContainsKey(device.id))
                 {
-                    ClientListener.knownDevices[device.ID] = device;
+                    ClientListener.knownDevices[device.id] = device;
                 }
                 else
                 {
                     if (device != null)
-                        ClientListener.knownDevices.Add(device.ID, device);
+                        ClientListener.knownDevices.Add(device.id, device);
                 }
                 ClientListener.saveDevices();
                 MainWindow.Instance.NotifyDeviceDatasetChanged();
@@ -356,7 +300,7 @@ namespace SoundMixerServer
         {
             byte[] EncryptedData = Convert.FromBase64String(encryptedString);
             byte[] DecryptedData = VCCryptography.RSADecrypt(EncryptedData);
-            return Encoding.UTF8.GetString(DecryptedData ?? new byte[0]);       
+            return Encoding.UTF8.GetString(DecryptedData ?? new byte[0]);
         }
 
         public ClientConnection(Socket socket)
@@ -365,13 +309,6 @@ namespace SoundMixerServer
             clientEP = socket.RemoteEndPoint as IPEndPoint;
         }
 
-     
-    }
 
-   
-    public class ApplicationIcon
-    {
-        public string id { get; set; }
-        public string icon { get; set; }
     }
 }
