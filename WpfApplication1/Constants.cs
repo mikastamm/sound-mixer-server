@@ -9,7 +9,8 @@ namespace SoundMixerServer
     public static class Constants
     {
         //Application
-        readonly public static string APPLICATION_NAME = "VolumeControlDesktop";
+        readonly public static string APPLICATION_NAME = "Sound Mixer Desktop";
+        readonly public static string DEV_NAME = "Mika Stamm";
         readonly public static string WEBSITE_URL = "http://nulldozer.me";
         readonly public static string SERVER_VERSION_URL = "http://nulldozer.me/server-version";
 

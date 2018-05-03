@@ -6,10 +6,11 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using SoundMixerServer.Networking.Connections;
 
 namespace SoundMixerServer.Networking
 {
-    class ClientLogic
+    public class ClientLogic
     {
         private Connection connection;
         private MessageSenderDispatcher messageSenderDispatcher;
@@ -26,6 +27,8 @@ namespace SoundMixerServer.Networking
 
         public void init()
         {
+            Console.WriteLine("Initializing connection to " + connection.IP.ToString());
+            addToConnectedDevices();
             AudioHelper.registerAudioSessions();
             messageSenderDispatcher = new MessageSenderDispatcher(connection, this);
             receive();
@@ -37,7 +40,7 @@ namespace SoundMixerServer.Networking
             {
                 device.Connected = false;
                 device.LastConnected = DateTime.Now;
-                ClientListener.connectedClients.Remove(IPAddress.Parse(device.IP));
+                ClientMangager.connectedClients.Remove(IPAddress.Parse(device.IP));
                 MainWindow.Instance.NotifyDeviceDatasetChanged();
             }
             connection.disconnect();
@@ -52,6 +55,17 @@ namespace SoundMixerServer.Networking
                 MessageHandler handler = factory.GetMessageHandler(received);
                 handler.handleMessage(received);
             }
+        }
+
+        private void addToConnectedDevices()
+        {
+            IPAddress thisAddress = connection.IP.Address;
+            if (ClientMangager.connectedClients.ContainsKey(thisAddress))
+            {
+                ClientMangager.connectedClients[thisAddress].disconnect();
+                ClientMangager.connectedClients.Remove(thisAddress);
+            }
+            ClientMangager.connectedClients.Add(thisAddress, this);
         }
     }
 }

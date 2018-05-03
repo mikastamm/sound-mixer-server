@@ -1,4 +1,5 @@
-﻿using SoundMixerServer.Networking.MessageSenders;
+﻿using SoundMixerServer.Networking.Connections;
+using SoundMixerServer.Networking.MessageSenders;
 using System;
 using System.Collections.Generic;
 using System.Linq;

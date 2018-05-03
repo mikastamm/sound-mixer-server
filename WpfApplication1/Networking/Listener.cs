@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace SoundMixerServer.Networking
 {
-    interface Connection
+    interface Listener
     {
-        void send(string data);
-        string readLine();
-        void disconnect();
+        void startListening();
+        void stopListening();
     }
 }

@@ -18,7 +18,7 @@ namespace SoundMixerServer.Networking.MessageHandlers
 
         public void handleMessage(string message)
         {
-            message = message.Substring(5);
+            message = message.Substring(Tag.Length+1);
             logic.sendVolumeBlacklist.Add(AudioSession.getSessionId(message));
         }
     }

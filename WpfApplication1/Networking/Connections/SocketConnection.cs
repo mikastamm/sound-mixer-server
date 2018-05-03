@@ -7,17 +7,19 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SoundMixerServer.Networking
+namespace SoundMixerServer.Networking.Connections
 {
     class SocketConnection : Connection, IDisposable
     {
         private Socket socket;
+        public IPEndPoint IP { get; set; }
         private StreamReader sr;
 
         public SocketConnection(Socket socket)
         {
             this.socket = socket;
             sr = new StreamReader(new NetworkStream(socket, false), Encoding.UTF8);
+            IP = socket.RemoteEndPoint as IPEndPoint;
         }
 
         public void disconnect()

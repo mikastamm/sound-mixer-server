@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SoundMixerServer.Networking;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -12,12 +13,11 @@ using System.Xml.Serialization;
 
 namespace SoundMixerServer
 {
-    public static class ClientListener
+    public static class ClientMangager
     {
         public static bool acceptNewDevices = true;
         private static bool listenerRunning = false;
-        public static Thread listenerThread;
-        public static Dictionary<IPAddress, ClientConnection> connectedClients = new Dictionary<IPAddress, ClientConnection>();
+        public static Dictionary<IPAddress, ClientLogic> connectedClients = new Dictionary<IPAddress, ClientLogic>();
 
         /*Model*/
         public static Dictionary<string, ClientInformation> knownDevices = new Dictionary<string, ClientInformation>();
@@ -29,11 +29,6 @@ namespace SoundMixerServer
                 {
                     col.Add(info.copy());
                 }
-                ////Fill the empty space in the DataGrid with empty ClientInformation objects, purely visual
-                //for(int i = 0; i < 10; i++)
-                //{
-                //    col.Add(ClientInformation.Empty);   
-                //}
 
                 return col;
             } }
@@ -41,7 +36,7 @@ namespace SoundMixerServer
 
         public static void disconnectAllDevices()
         {
-            foreach(ClientConnection c in connectedClients.Values)
+            foreach(ClientLogic c in connectedClients.Values)
             {
                 c.disconnect();
             }
@@ -98,7 +93,7 @@ namespace SoundMixerServer
                         //Connected to device, übergabe an ClientConnection object for authentification and sending of data
                         if (acceptNewDevices)
                         {
-                            ClientConnection client = new ClientConnection(newSocket);
+                    /*        ClientConnection client = new ClientConnection(newSocket);
                         if (connectedClients.ContainsKey(client.clientEP.Address))
                         {
                             connectedClients[client.clientEP.Address].disconnect();
@@ -106,54 +101,15 @@ namespace SoundMixerServer
                         }
                             connectedClients.Add(client.clientEP.Address, client);
 
-                            Task.Factory.StartNew(() => { client.initializeConnection(); });
+                            Task.Factory.StartNew(() => { client.initializeConnection(); });*/
+                            //Moved to ClientLogic
                         }
                     }
                 }
 
-
-            // catch (Exception ex)
-            // {
-            //    throw new Exception("Fehler bei Verbindungserkennung", ex);
-            // }
-            listenerRunning = false;
         }
 
-        public static void StopListener()
-        {
-            if (listenerThread != null)
-            {
-                acceptNewDevices = false;
-                Console.WriteLine("Listener Thread Stopped");
-            }
-            else
-            {
-                Console.WriteLine("Listener Thread is Null");
-            }
-        }
 
-        public static void StartListener()
-        {
-            try
-            {
-                if (!listenerRunning)
-                {
-                    Thread thread = new Thread(new ThreadStart(mainListener));
-                    thread.Start();
-                    Console.WriteLine("Listener Thread started");
-                    listenerThread = thread;
-                }
-                else
-                {
-                    acceptNewDevices = true;
-                }
-            }
-            catch(Exception ex)
-            {
-                Console.WriteLine(ex.ToString());
-                throw;
-            }
-        }
     }
 
     [XmlRoot("Devices")]

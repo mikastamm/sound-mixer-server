@@ -84,6 +84,9 @@
     <Compile Include="AuthentificationManager.cs" />
     <Compile Include="Helpers\AutoStart.cs" />
     <Compile Include="Networking\ApplicationIcon.cs" />
+    <Compile Include="Networking\Connections\SslListener.cs" />
+    <Compile Include="Networking\Listener.cs" />
+    <Compile Include="Networking\ListenerFactory.cs" />
     <Compile Include="Networking\MessageHandlers\DeviceInfoMessageHandler.cs" />
     <Compile Include="Networking\MessageHandlers\EditAudioSessionMessageHandler.cs" />
     <Compile Include="Networking\MessageHandlers\EndTrackMessageHandler.cs" />
@@ -100,7 +103,7 @@
     <Compile Include="ClientListener.cs" />
     <Compile Include="Helpers\ConsoleManager.cs" />
     <Compile Include="Networking\ClientLogic.cs" />
-    <Compile Include="Networking\Connection.cs" />
+    <Compile Include="Networking\Connections\Connection.cs" />
     <Compile Include="Networking\ConnectionListener.cs" />
     <Compile Include="Networking\IDCodes.cs" />
     <Compile Include="Main.cs" />
@@ -108,8 +111,9 @@
     <Compile Include="Networking\MessageHandlers\MessageHandler.cs" />
     <Compile Include="Networking\MessageSenderDispatcher.cs" />
     <Compile Include="Networking\MessageSenders\AudioSessionSender.cs" />
-    <Compile Include="Networking\SocketConnection.cs" />
-    <Compile Include="Networking\SocketListener.cs" />
+    <Compile Include="Networking\Connections\SocketConnection.cs" />
+    <Compile Include="Networking\Connections\SocketListener.cs" />
+    <Compile Include="Networking\Connections\SslConnection.cs" />
     <Compile Include="ShellLink.cs" />
     <Compile Include="Audio\SoundMixer.cs" />
     <Compile Include="VCCryptography.cs" />

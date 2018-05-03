@@ -27,16 +27,16 @@ namespace SoundMixerServer.Networking.MessageHandlers
             //dev.IP = clientEP.Address.ToString();
             dev.Connected = true;
 
-            if(ClientListener.knownDevices.ContainsKey(dev.id))
+            if(ClientMangager.knownDevices.ContainsKey(dev.id))
             {
-                ClientListener.knownDevices[dev.id] = dev;
+                ClientMangager.knownDevices[dev.id] = dev;
             }
             else
             {
-                ClientListener.knownDevices.Add(dev.id, dev);
+                ClientMangager.knownDevices.Add(dev.id, dev);
             }
 
-            ClientListener.saveDevices();
+            ClientMangager.saveDevices();
             logic.device = dev;
             MainWindow.Instance.NotifyDeviceDatasetChanged();
         }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SoundMixerServer.Networking.Connections;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,7 +21,14 @@ namespace SoundMixerServer.Networking.MessageHandlers
         public MessageHandler GetMessageHandler(string message)
         {
             MessageHandler handler = null;
-            string messageTag = message.Substring(0, message.IndexOf("{"));
+            string messageTag;
+            int startIndexOfData = message.IndexOf("{");
+
+            if (startIndexOfData != -1)
+                messageTag = message.Substring(0, startIndexOfData);
+            else
+                messageTag = message;
+
             switch (messageTag)
             {
                 case GetAudioSessionsMessageHandler.Tag:

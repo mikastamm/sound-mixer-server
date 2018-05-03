@@ -36,7 +36,7 @@ namespace SoundMixerServer
                 Main.Instance.audioManager.OnAudioSessionIconChanged -= Form1_OnAudioSessionIconChanged;
                 Main.Instance.audioManager.OnAudioSessionRemoved -= Form1_OnAudioSessionRemoved;
 
-                ClientListener.connectedClients.Remove(IPAddress.Parse(device.IP));
+                ClientMangager.connectedClients.Remove(IPAddress.Parse(device.IP));
             }
             socket.Close();
         }
@@ -253,16 +253,16 @@ namespace SoundMixerServer
                     return;
                 }
 
-                if (device != null && ClientListener.knownDevices.ContainsKey(device.id))
+                if (device != null && ClientMangager.knownDevices.ContainsKey(device.id))
                 {
-                    ClientListener.knownDevices[device.id] = device;
+                    ClientMangager.knownDevices[device.id] = device;
                 }
                 else
                 {
                     if (device != null)
-                        ClientListener.knownDevices.Add(device.id, device);
+                        ClientMangager.knownDevices.Add(device.id, device);
                 }
-                ClientListener.saveDevices();
+                ClientMangager.saveDevices();
                 MainWindow.Instance.NotifyDeviceDatasetChanged();
 
                 if (recv.Equals("GETAUDIOSESSIONS"))

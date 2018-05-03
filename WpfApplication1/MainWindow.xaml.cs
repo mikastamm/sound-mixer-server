@@ -151,9 +151,9 @@ namespace SoundMixerServer
 
             dgDevices.Dispatcher.Invoke(new Action(() =>
             {
-                dgDevices.DataContext = ClientListener.deviceObservables;
+                dgDevices.DataContext = ClientMangager.deviceObservables;
                 
-                if(ClientListener.deviceObservables.Count % 2 == 0)
+                if(ClientMangager.deviceObservables.Count % 2 == 0)
                 {
                     dgPadding.AlternatingRowBackground = alternative;
                     dgPadding.RowBackground = white;

@@ -9,6 +9,7 @@ using System.IO;
 using CoreAudio;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using SoundMixerServer.Networking;
 
 namespace SoundMixerServer
 {
@@ -59,8 +60,7 @@ namespace SoundMixerServer
             serverName = Environment.MachineName;
             info = new VolumeServer() { name = serverName, hasPassword = AuthentificationManager.Instance.usesPassword, id = VCCryptography.getPublicKey() };
             audioManager = new AudioManager();
-
-            ClientListener.StartListener();
+            ListenerFactory.listener.startListening();
 
             if (!BroadcastReceiver.running)
             {
@@ -79,9 +79,9 @@ namespace SoundMixerServer
             Console.WriteLine("\n##Stopping Server##");
             BroadcastReceiver.respondToNdRequests = false;
             Console.WriteLine("Broadcastreceiver disabled");
-            ClientListener.StopListener();
+            ListenerFactory.listener.stopListening();
             audioManager.Close();
-            ClientListener.disconnectAllDevices();
+            ClientMangager.disconnectAllDevices();
             Console.WriteLine("##Server Stopped##\n");
         }
 
