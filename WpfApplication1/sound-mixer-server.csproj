@@ -84,6 +84,7 @@
     <Compile Include="AuthentificationManager.cs" />
     <Compile Include="Helpers\AutoStart.cs" />
     <Compile Include="Networking\ApplicationIcon.cs" />
+    <Compile Include="Networking\Connections\CertificateManager.cs" />
     <Compile Include="Networking\Connections\SslListener.cs" />
     <Compile Include="Networking\Listener.cs" />
     <Compile Include="Networking\ListenerFactory.cs" />
@@ -100,7 +101,7 @@
     <Compile Include="Networking\BroadCastSender.cs" />
     <Compile Include="Networking\ClientConnection.cs" />
     <Compile Include="ClientInformation.cs" />
-    <Compile Include="ClientListener.cs" />
+    <Compile Include="ClientManager.cs" />
     <Compile Include="Helpers\ConsoleManager.cs" />
     <Compile Include="Networking\ClientLogic.cs" />
     <Compile Include="Networking\Connections\Connection.cs" />

@@ -49,11 +49,18 @@ namespace SoundMixerServer.Networking
         private void receive()
         {
             string received;
-            MessageHandlerFactory factory = new MessageHandlerFactory(connection, this);
-            while((received = connection.readLine()) != null)
+            MessageHandlerFactory factory = new MessageHandlerFactory(connection, this, connection.IP.Address);
+            try
             {
-                MessageHandler handler = factory.GetMessageHandler(received);
-                handler.handleMessage(received);
+                while ((received = connection.readLine()) != null)
+                {
+                    MessageHandler handler = factory.GetMessageHandler(received);
+                    handler.handleMessage(received);
+                }
+            }
+            catch
+            {
+                disconnect();
             }
         }
 

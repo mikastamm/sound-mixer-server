@@ -31,8 +31,8 @@ namespace SoundMixerServer
                 }
 
                 return col;
-            } }
-
+            }
+        }
 
         public static void disconnectAllDevices()
         {
@@ -67,47 +67,7 @@ namespace SoundMixerServer
             }
         }
 
-        private static void mainListener()
-        {
-            listenerRunning = true;
-            Console.WriteLine("MainListener: Thread Started");
-            // Alle Netzwerk-Schnittstellen abhören
-            TcpListener listener = new TcpListener(IPAddress.Any, Constants.CLIENT_COMMUNICATION_TCP_PORT);
-            Console.WriteLine("Listening on port " + Constants.CLIENT_COMMUNICATION_TCP_PORT + "...");
-            loadDevices();
-
-                listener.Start();
-                // Solange Clients akzeptieren, bis das
-                // angegebene Maximum erreicht ist
-                while (true)
-                {
-                    //while (!listener.Pending()) { Thread.Sleep(sleepTime); }
-                    Socket newSocket = listener.AcceptSocket();
-                    if (newSocket != null)
-                    {
-                        // Mitteilung bzgl. neuer Clientverbindung
-                        Console.WriteLine("New Client (" +
-                            "IP: " + newSocket.RemoteEndPoint + ", " +
-                            "Port " + ((IPEndPoint)newSocket.LocalEndPoint).Port.ToString() + ")");
-
-                        //Connected to device, übergabe an ClientConnection object for authentification and sending of data
-                        if (acceptNewDevices)
-                        {
-                    /*        ClientConnection client = new ClientConnection(newSocket);
-                        if (connectedClients.ContainsKey(client.clientEP.Address))
-                        {
-                            connectedClients[client.clientEP.Address].disconnect();
-                            connectedClients.Remove(client.clientEP.Address);
-                        }
-                            connectedClients.Add(client.clientEP.Address, client);
-
-                            Task.Factory.StartNew(() => { client.initializeConnection(); });*/
-                            //Moved to ClientLogic
-                        }
-                    }
-                }
-
-        }
+        
 
 
     }

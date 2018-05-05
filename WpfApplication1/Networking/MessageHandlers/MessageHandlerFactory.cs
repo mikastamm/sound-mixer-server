@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,11 +12,13 @@ namespace SoundMixerServer.Networking.MessageHandlers
     {
         private Connection conn;
         private ClientLogic logic;
+        private IPAddress senderIp;
 
-        public MessageHandlerFactory(Connection conn, ClientLogic logic)
+        public MessageHandlerFactory(Connection conn, ClientLogic logic, IPAddress senderIp)
         {
             this.conn = conn;
             this.logic = logic;
+            this.senderIp = senderIp;
         }
 
         public MessageHandler GetMessageHandler(string message)
@@ -35,7 +38,7 @@ namespace SoundMixerServer.Networking.MessageHandlers
                     handler = new GetAudioSessionsMessageHandler(conn);
                     break;
                 case DeviceInfoMessageHandler.Tag:
-                    handler = new DeviceInfoMessageHandler(logic);
+                    handler = new DeviceInfoMessageHandler(logic, senderIp);
                     break;
                 case EditAudioSessionMessageHandler.Tag:
                     handler = new EditAudioSessionMessageHandler();

@@ -18,12 +18,19 @@ namespace SoundMixerServer.Networking.Connections
         public void startListening()
         {
             Task.Factory.StartNew(() => {
-                Console.WriteLine("Listening for SSL Connection on port " + Constants.CLIENT_COMMUNICATION_TCP_PORT + "...");
-                listener.Start();
+            Console.WriteLine("Listening for SSL Connection on port " + Constants.CLIENT_COMMUNICATION_TCP_PORT + "...");
+            listener.Start();
 
-                while (true)
-                {
-                    TcpClient client = listener.AcceptTcpClient();
+            while (true)
+            {
+                TcpClient client = listener.AcceptTcpClient();
+                SslStream stream = getSslStream(client);
+
+                if (client == null || stream == null)
+                    throw new Exception("Client or Stream null");
+
+                ClientLogic clientLogic = new ClientLogic(new SslConnection(stream, client));
+                Task.Factory.StartNew(() => clientLogic.init());
                 }
             });
         }

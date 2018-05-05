@@ -165,8 +165,7 @@ namespace SoundMixerServer
                 {
                     i++;
                     ApplicationIcon icon = new ApplicationIcon();
-                    Process proc = Process.GetProcessById(session.pid);
-                    Bitmap bmp = Icon.ExtractAssociatedIcon(proc.MainModule.FileName).ToBitmap();
+                    Bitmap bmp = getApplicationIcon(session.pid);
                     ImageConverter converter = new ImageConverter();
                     icon.icon = Convert.ToBase64String((byte[])converter.ConvertTo(bmp, typeof(byte[])));
                     icon.id = session.id;
@@ -174,6 +173,20 @@ namespace SoundMixerServer
                 }
             }
             return null;
+        }
+
+        private Bitmap getApplicationIcon(int sessionId)
+        {
+            try
+            {
+                Process proc = Process.GetProcessById(sessionId);
+                Bitmap bmp = Icon.ExtractAssociatedIcon(proc.MainModule.FileName).ToBitmap();
+                return bmp;
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         public AudioSession[] getDisplayableAudioSessions()
