@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SoundMixerServer.Networking
+namespace SoundMixerServer
 {
-    public interface MessageHandler
+    public class AuthenticationState
     {
-        void handleMessage(string message);
+        public bool Authenticated { get; set; }
     }
 }

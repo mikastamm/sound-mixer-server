@@ -81,6 +81,8 @@
     <Compile Include="Audio\AudioHelper.cs" />
     <Compile Include="Audio\AudioManager.cs" />
     <Compile Include="Audio\AudioSession.cs" />
+    <Compile Include="Authentication.cs" />
+    <Compile Include="AuthenticationState.cs" />
     <Compile Include="AuthentificationManager.cs" />
     <Compile Include="Helpers\AutoStart.cs" />
     <Compile Include="Networking\ApplicationIcon.cs" />
@@ -88,6 +90,7 @@
     <Compile Include="Networking\Connections\SslListener.cs" />
     <Compile Include="Networking\Listener.cs" />
     <Compile Include="Networking\ListenerFactory.cs" />
+    <Compile Include="Networking\MessageHandlers\AuthenticationMessageHandlerRunner.cs" />
     <Compile Include="Networking\MessageHandlers\DeviceInfoMessageHandler.cs" />
     <Compile Include="Networking\MessageHandlers\EditAudioSessionMessageHandler.cs" />
     <Compile Include="Networking\MessageHandlers\EndTrackMessageHandler.cs" />
@@ -115,6 +118,7 @@
     <Compile Include="Networking\Connections\SocketConnection.cs" />
     <Compile Include="Networking\Connections\SocketListener.cs" />
     <Compile Include="Networking\Connections\SslConnection.cs" />
+    <Compile Include="Networking\MessageSenders\NotAuthenticatedMessageSender.cs" />
     <Compile Include="ShellLink.cs" />
     <Compile Include="Audio\SoundMixer.cs" />
     <Compile Include="VCCryptography.cs" />
